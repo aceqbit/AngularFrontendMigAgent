@@ -1,11 +1,11 @@
 ---
 name: Angular Migration Planning
 description: >
-  Constructs a detailed, phased migration plan based on the findings from the assessment report.
-  This skill breaks down the migration into sequential, manageable tasks and defines the strategy for each version jump.
+  Constructs a detailed, phased plan for the v16 -> v17 migration based on assessment findings.
+  Breaks down the upgrade into sequential, manageable tasks with clear validation criteria.
 
 scope:
-  - Angular v16 -> v17 only in this workspace specialization
+  - Angular v16 -> v17 only
 
 dependencies:
   - `assessment.skill.md`

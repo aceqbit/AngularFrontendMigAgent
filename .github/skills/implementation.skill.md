@@ -1,11 +1,11 @@
 ---
 name: Angular Migration Implementation
 description: >
-  Executes the migration plan by applying code and configuration changes in a controlled, step-by-step manner.
-  This skill is responsible for all file modifications, dependency updates, and build validations.
+  Executes the v16 -> v17 migration plan by applying code and configuration changes step-by-step.
+  Handles all file modifications, dependency updates, and build validations for the active migration target.
 
 scope:
-  - Angular v16 -> v17 only in this workspace specialization
+  - Angular v16 -> v17 only
 
 dependencies:
   - `planning.skill.md`

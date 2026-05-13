@@ -1,11 +1,11 @@
 ---
 name: Angular Migration Documentation
 description: >
-  Documents the entire migration process, creating a comprehensive record of all changes, decisions, and outcomes.
-  This skill ensures that the project's documentation is updated to reflect the new, migrated state.
+  Documents the v16 -> v17 migration process, recording all changes, decisions, and outcomes.
+  Ensures project documentation reflects the post-migration state and future developer guidance.
 
 scope:
-  - Angular v16 -> v17 only in this workspace specialization
+  - Angular v16 -> v17 only
 
 dependencies:
   - `implementation.skill.md`

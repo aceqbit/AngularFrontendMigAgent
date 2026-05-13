@@ -1,11 +1,11 @@
 ---
 name: Angular Migration Unit Testing
 description: >
-  Manages and executes unit tests to ensure the application remains stable throughout the migration process.
-  This skill is responsible for updating tests to be compatible with new Angular versions and verifying that all tests pass.
+  Manages and executes unit tests to ensure application stability during the v16 -> v17 migration.
+  Updates tests to be compatible with Angular v17 and verifies that all tests pass.
 
 scope:
-  - Angular v16 -> v17 only in this workspace specialization
+  - Angular v16 -> v17 only
 
 dependencies:
   - `implementation.skill.md`
