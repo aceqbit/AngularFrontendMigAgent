@@ -40,7 +40,7 @@
 
 - [ ] All `@angular/*` packages are aligned to the same version.
 - [ ] TypeScript is at version 5.9.x.
-- [ ] `moduleResolution` is set to `bundler`.
+- [ ] `moduleResolution` is set to `bundler`. 
 - [ ] No "Ghost" dependencies are present.
 - [ ] No mixed package versions.
 - [ ] No standalone `@angular/common/http` package.

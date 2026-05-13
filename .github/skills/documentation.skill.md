@@ -4,6 +4,9 @@ description: >
   Documents the entire migration process, creating a comprehensive record of all changes, decisions, and outcomes.
   This skill ensures that the project's documentation is updated to reflect the new, migrated state.
 
+scope:
+  - Angular v16 -> v17 only in this workspace specialization
+
 dependencies:
   - `implementation.skill.md`
   - `unittesting.skill.md`
@@ -23,7 +26,7 @@ tasks:
   - task: Document new architectural patterns and best practices.
     instructions:
       - Identify significant changes made during the migration (e.g., adoption of standalone components, new control flow syntax).
-      - Create a new section in the project's main `README.md` or a dedicated `migration-summary.md` to document these changes for future developers.
+      - Create a new section in the project's main `README.md` or a dedicated `migration-summary.md` to document the v16 -> v17 changes for future developers.
 
   - task: Generate the final documentation.
     instructions:

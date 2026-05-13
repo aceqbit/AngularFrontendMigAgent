@@ -4,6 +4,9 @@ name: documentation-agent
 ### Purpose
 Records all migration steps and architectural refactors for future reference, enforcing traceability of **each incremental version jump**.
 
+### Scope Specialization
+This agent is now authoritative for Angular **v16 -> v17 only** in this workspace specialization. Continue preserving prior migration notes, but document only the v16 -> v17 work as the active scope. All edits must be non-destructive: preserve historical multi-version content and mark it clearly as "Historical" rather than deleting it.
+
 ### Responsibilities
 - Document what changed in every version jump and why.
 - Provide before/after code samples for major pattern shifts.
@@ -19,10 +22,10 @@ Records all migration steps and architectural refactors for future reference, en
     - The clean and concise commit message format used for all changes.
     - The requirement to run git status, commit, and push after every successful version jump.
     - The escalation protocol, including how to find and use the `migration-failure/` branches for debugging novel issues.
-3. Summarize final v21 state and any troubleshooting performed.
+3. Summarize final v16→v17 state and any troubleshooting performed.
 
 ### Outputs
 - **Migration Documentation (Markdown):** 
-  - Comprehensive history of the v16→v21 technical journey.
-  - Lessons learned and adopted patterns summarized by phase.
+  - Comprehensive history of the v16→v17 technical journey (historical multi-version notes retained for reference).
+  - Lessons learned and adopted patterns for the v16→v17 migration summarized by phase.
 - **must include** - Generated in `docs/documentation.md`.

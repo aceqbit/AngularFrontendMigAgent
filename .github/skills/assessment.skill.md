@@ -5,11 +5,14 @@ description: >
   This skill focuses on identifying legacy patterns, dependency issues, and configuration problems that could block the migration.
   It generates a detailed assessment report that serves as the foundation for the planning phase.
 
+scope:
+  - Angular v16 -> v17 only in this workspace specialization
+
 tasks:
   - task: Analyze `package.json` for outdated `@angular/*` packages and third-party dependencies.
     instructions:
       - Read `package.json`.
-      - Compare installed versions against the required versions for each incremental step (v16->v17, v17->v18, etc.).
+      - Compare installed versions against the required versions for the v16 -> v17 step.
       - Flag any dependencies that are known to be incompatible with target Angular versions.
     files:
       - `package.json`
@@ -25,7 +28,7 @@ tasks:
   - task: Scan core application files for deprecated APIs and patterns.
     instructions:
       - Analyze `main.ts`, `app.module.ts`, and key component files.
-      - Identify usage of deprecated APIs that will be removed in v17+.
+      - Identify usage of deprecated APIs that must be handled during the v16 -> v17 migration.
       - Look for patterns that need to be refactored (e.g., non-standalone components).
     files:
       - `src/main.ts`

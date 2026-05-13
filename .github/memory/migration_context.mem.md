@@ -5,6 +5,9 @@ name: Migration Context Memory
 ## Purpose
 To store high-level, cross-cutting knowledge about the Angular v16 to v21 migration process. This memory is accessible to all agents and provides overarching context and strategies.
 
+## Workspace Specialization Note
+This workspace is now specialized for Angular **v16 -> v17 only**. Keep the broader migration history below, but apply it only when it helps the v16 -> v17 path.
+
 ## Memory Structure
 
 ### Entry Template

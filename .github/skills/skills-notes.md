@@ -2,6 +2,9 @@
 
 This file is the master log for all skills. When a new skill is developed or an existing one is updated, the change **must** be logged here first. This log serves as the source of truth for propagating changes to the individual skill definition files.
 
+### Workspace Specialization Note
+This workspace now treats the migration tooling as **v16 -> v17 only**. Existing broader skill notes remain preserved for history, but new skill behavior should target the single upgrade path.
+
 ## Skill Updates & Changelog
 
 ### New Skill: `clean-workspace`

@@ -4,9 +4,12 @@ name: css-agent
 ### Purpose
 Specialized agent for style modernization and migration across Angular version jumps. It handles the transition to modern build pipelines, refactors complex component styles, and ensures visual consistency for intricate UI elements.
 
+### Scope Specialization
+This agent focuses on CSS/style issues for the Angular **v16 -> v17** migration in this workspace. Some entries below reference newer build systems (Vite) or Sass transitions that are historical or optional; for the active v16→v17 path prioritize compatibility with the Angular CLI builder and minimal style refactors. Do NOT attempt to migrate the project to Vite as part of the v16→v17 migration unless the repository explicitly documents that intent.
+
 ### Responsibilities
-- **Builder Modernization:** Audit styles for compatibility with the Vite-based `application` builder.
-- **Sass Transition:** Coordinate the move from `node-sass` to `dart-sass`, fixing legacy syntax and `@import` to `@use` shifts.
+- **Builder Modernization:** For v16→v17 prioritize compatibility with the Angular CLI builder (`@angular-devkit/build-angular`). (Historical/optional: audit Vite-based `application` builder only if the project plans to adopt it.)
+- **Sass Transition:** Only apply Sass migrations if the project uses Sass. For projects using plain CSS (like this workspace), this step is optional.
 - **Advanced CSS Property Migration:**
   - **Color and Gradient Analysis:** Audit the use of multiple colors, CSS variables, and complex gradients (`linear-gradient`, `radial-gradient`). Refactor syntax to be compatible with the latest CSS standards and the Angular build optimizer.
   - **Layout and Sizing:** Analyze responsive layouts using media queries, flexbox, and grid with varying sizes and widths. Ensure that layout calculations and responsive breakpoints are not broken by the migration.
@@ -21,6 +24,8 @@ Specialized agent for style modernization and migration across Angular version j
 - **Architectural Cleanup:** Perform "Clean & Clear" refactors for complex `AppComponent` layouts, transitioning legacy Float/Flex hacks to modern CSS Grid.
 - **Asset Path Correction:** Resolve relative asset paths (backgrounds, fonts) that break during the v16→v17 builder transition.
 - **Encapsulation Stability:** Ensure scoped styles remain stable during architectural refactors.
+
+Note: The above tasks are prioritized by risk for the v16→v17 migration. Avoid large-scale visual rewrites unless they directly address a build or runtime compatibility issue for v17.
 
 ### Workflow
 1. **Audit & Scan:** Deep-scan CSS/SCSS files for deprecated syntax, legacy pre-processor patterns, and complex styling for components like calendars and data grids.

@@ -4,6 +4,9 @@ description: >
   Manages and executes unit tests to ensure the application remains stable throughout the migration process.
   This skill is responsible for updating tests to be compatible with new Angular versions and verifying that all tests pass.
 
+scope:
+  - Angular v16 -> v17 only in this workspace specialization
+
 dependencies:
   - `implementation.skill.md`
 
@@ -11,7 +14,7 @@ tasks:
   - task: Update outdated test configurations.
     instructions:
       - Modify `karma.conf.js` and `tsconfig.spec.json` to align with the new Angular version.
-      - Update testing libraries like Jasmine and Karma as needed.
+      - Update testing libraries like Jasmine and Karma as needed for the v16 -> v17 migration.
     files:
       - `karma.conf.js`
       - `tsconfig.spec.json`

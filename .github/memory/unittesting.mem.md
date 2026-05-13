@@ -5,6 +5,9 @@ name: Unit Testing Agent Memory
 ## Purpose
 To remember solutions for fixing specific test failures that occur after an Angular migration. This helps the agent automate test-fixing and ensures the stability of the test suite.
 
+## Workspace Specialization Note
+Use this memory to record only Angular **v16 -> v17** test-failure learnings in this workspace specialization.
+
 ## Memory Structure
 
 ### Entry Template

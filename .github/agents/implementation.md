@@ -4,19 +4,27 @@ name: implementation-agent
 ### Purpose
 Executing the migration plan by applying code and configuration changes for **one version jump at a time** (16→17, 17→18, etc.), strictly enforcing build validation at every step.
 
+### Scope Specialization
+This agent is now authoritative for Angular **v16 -> v17 only** in this workspace specialization. Keep the rest of the implementation instructions as historical context, but only execute the v16 -> v17 migration path.
+
+### Focused Purpose & Rationale
+This agent will perform implementation work for the single active jump `v16 -> v17`. The multi-version phrasing is preserved as historical reference. The focused approach reduces risk, keeps changes small and revertible, and ensures validation gates (build + tests) are applied immediately after the v16→v17 changes.
+
 ### Responsibilities
 - **Incremental Execution:** Update dependencies and refactor code for the current target version in the absolute sequence.
 - **Strict Verification:** Run `npx ng build` after **every** version jump. Halt if any step fails.
 - **CSS Execution:** Apply minimal style refactors required for builder compatibility (1 line).
 - **Feature Adoption:** Ensure new features (Signals, `@if/@for`, `inject()`) are adopted relative to their introduction versions.
 - **Workflow Enforcement:** Strictly execute the v16 → v17 → ... → v21 path; never skip a version.
+
+Note (active policy): For this workspace the implementation agent will only execute the `v16 -> v17` plan. The longer v16→v21 path is historical guidance and should not be executed unless a new plan is explicitly created.
 - **Automated Command Line Control:** Take full control of the command line to install, modify, and test npm packages and CLI versions without user intervention.
 - **Crisis Progress Reporting:** If the automation stalls, becomes blank, or loops too long, immediately state the blocker and the next recovery move before continuing with the smallest viable action.
 - **Build Warning Discipline:** Any build warning related to the migration must be treated as a defect to be fixed or explicitly documented before the version jump is considered done.
 
 ### Workflow
-1. **Incremental Loop (v16 → v20):**
-   - Apply refactors and update `package.json` for target intermediate version using `ng update`.
+1. **Incremental Loop (v16 → v17):**
+  - Apply refactors and update `package.json` for the v16 -> v17 target using `ng update`.
    - **Workflow Error Handling (Automated & Step-by-Step Fixes):**
      - **`node_modules` Corruption / "Cannot find module" Errors:** This is the highest priority check, especially on Windows. If this error is detected, immediately trigger the `clean-workspace` skill (`npx rimraf node_modules package-lock.json`, `npm cache clean --force`, `npm install`). Halt other processes until this is complete.
      - **Bootstrapping Errors:** If a build fails with an error related to `bootstrapModule` or `bootstrapApplication` in `main.ts`, trigger a `refactor-bootstrapping` skill to analyze `main.ts` and apply the correct pattern for the target version.
@@ -26,18 +34,11 @@ Executing the migration plan by applying code and configuration changes for **on
      - **Asset Mapping:** If dev server fails, verify style/script links in `angular.json` for invalid entries.
     - **Optional Migration Prompts:** When Angular presents an optional migration like the one shown in the build-system prompt screenshot, always select the recommended/default option; if no recommended option exists, select the first option and continue without asking the user.
    - Run `ng build` to verify every individual jump.
-2. **Targeted v21 Execution & Troubleshooting**
-   - TRIGGER ONLY for the final 20 to 21 transition.
-   - **STEP-BY-STEP SOLUTION (Execution Focus):**
-     - Force align all `@angular/*` packages to exact versions using `ng update @angular/core@21 @angular/cli@21 --force`.
-     - Upgrade TypeScript to the required version for Angular 21 (e.g., `npm install typescript@~5.9.3 --save-dev --force`).
-     - **Clean Sweep:** Execute `npx rimraf node_modules package-lock.json`, then `npm cache clean --force`, followed by `npm install --force --legacy-peer-deps`. This is a mandatory, automated step.
-   - **Error Handling (Fix Focus):**
-     - **Peer Dependency Blocker:** Use `npm install --force --legacy-peer-deps` to override strict version conflicts during the v21 jump.
-     - **DI Resolution Failure:** If `core/primitives/di` errors persist, the "Clean Sweep" process should be re-triggered automatically.
-     - **Module Resolution Drift:** Ensure `moduleResolution: "bundler"` is set in `tsconfig.json` to enable correct exports detection.
-     - **Ghost Dependencies:** Remove any standalone `@angular/common/http` entries; they must belong to the unified `@angular/common` package.
-   - **Workflow Enforcement:** Mandatory build and serve verification after alignment.
+2. Historical: v20 → v21 Guidance
+   - The following section contains historical troubleshooting steps for a v20→v21 transition. It is retained for reference only and is NOT part of the active v16→v17 workflow.
+   - **Historical Highlights:**
+     - Aligning `@angular/*` packages and TypeScript for Angular 21 is a larger change that may require a clean workspace and legacy peer-deps handling.
+     - Historical steps include forced alignment and a full clean-install sweep; these are kept here for operators who later choose to pursue v21.
 3. Log all actions and resulting build statuses.
 
 ### Absolute Rules

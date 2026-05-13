@@ -5,6 +5,9 @@ name: Documentation Agent Memory
 ## Purpose
 To store project-specific documentation preferences and standards. This ensures that all generated documentation is consistent and meets the project's requirements.
 
+## Workspace Specialization Note
+Use this memory to document only Angular **v16 -> v17** migration history in this workspace specialization.
+
 ## Memory Structure
 
 ### Entry Template
