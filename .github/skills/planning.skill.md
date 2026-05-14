@@ -19,7 +19,7 @@ tasks:
       - Parse `report/assessment_report.md` to extract all identified issues.
       - Group issues
        into logical phases (e.g., Core Updates, Dependency Fixes, Refactoring).
-      - Create a strict, sequential plan for each version jump (v16->v17, v17->v18, etc.).
+      - Create a strict, sequential plan for the active version jump (v17->v18). Historical per-version templates are retained for reference.
 
   - task: Define tasks, risks, and validation criteria for each phase.
     instructions:
@@ -52,7 +52,7 @@ tasks:
     - task: Generate per-version migration plans.
       instructions:
         - Generate FIVE separate, atomic migration plan files, one for each version jump:
-          1. `plan/migration_v16_to_v17.md` — All tasks, phases, validation gates, rollback triggers for v16→v17 only
+          1. `plan/migration_v16_to_v17.md` — Historical v16→v17 plan (kept for reference); active plan target is `plan/migration_v17_to_v18.md`.
           2. `plan/migration_v17_to_v18.md` — All tasks, phases, validation gates, rollback triggers for v17→v18 only
           3. `plan/migration_v18_to_v19.md` — All tasks, phases, validation gates, rollback triggers for v18→v19 only
           4. `plan/migration_v19_to_v20.md` — All tasks, phases, validation gates, rollback triggers for v19→v20 only
@@ -70,7 +70,7 @@ tasks:
         - **CRITICAL**: Do NOT cross-reference or create dependencies between version plans in the files themselves. Each must be complete and standalone.
         - Rationale: User experienced catastrophic midway failures with monolithic plans. Atomic per-version plans enable granular rollback and prevent cross-version corruption.
       outputs:
-        - `plan/migration_v16_to_v17.md`
+        - Comprehensive history of the v17→v18 technical journey (historical v16→v21 record retained for reference).
         - `plan/migration_v17_to_v18.md`
         - `plan/migration_v18_to_v19.md`
         - `plan/migration_v19_to_v20.md`

@@ -50,9 +50,9 @@ tasks:
     - task: Execute per-version migration plans sequentially.
       instructions:
         - Read `plan/migration_plan.md` to understand the master index and sequence of all 5 version-specific plans.
-        - Execute one version plan at a time in order: v16→v17, v17→v18, v18→v19, v19→v20, v20→v21.
+        - Execute one version plan at a time; active sequence: v17→v18. Other versions are retained as historical templates and should not be executed during this run.
         - For each version plan:
-          1. Read the plan file (e.g., `plan/migration_v16_to_v17.md`)
+          1. Read the plan file (e.g., `plan/migration_v17_to_v18.md`; historical `plan/migration_v16_to_v17.md` retained for reference)
           2. Execute ALL tasks in that plan fully, respecting all phases and validation gates
           3. After all tasks complete, trigger the validation gates (build, test, lint) for that version
           4. If ALL gates pass: Create git checkpoint with commit message "chore: complete Angular [VERSION] migration"

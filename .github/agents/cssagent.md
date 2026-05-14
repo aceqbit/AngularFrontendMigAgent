@@ -25,7 +25,7 @@ Specialized agent for style modernization and migration across Angular version j
     - **Autocomplete (Complex):** Migrate styles for complex autocomplete components. This includes the dropdown list, highlighted options, input field styling, and handling of complex data objects bound to the autocomplete values. Ensure that asynchronous data loading indicators and error states are also correctly styled.
 - **Shadow Piercing Audit:** Identify and refactor legacy shadow-piercing descendants (`/deep/`, `>>>`) to modern `::ng-deep` or CSS Custom Properties.
 - **Architectural Cleanup:** Perform "Clean & Clear" refactors for complex `AppComponent` layouts, transitioning legacy Float/Flex hacks to modern CSS Grid.
-- **Asset Path Correction:** Resolve relative asset paths (backgrounds, fonts) that break during the v16→v17 builder transition.
+- **Asset Path Correction:** Resolve relative asset paths (backgrounds, fonts) that break during the v17→v18 builder transition. (Historical: v16→v17 note retained.)
   (Historical note: the example above references v16→v17; when executing for v17→v18 the agent should check v17→v18 asset/path differences instead.)
 - **Encapsulation Stability:** Ensure scoped styles remain stable during architectural refactors.
 

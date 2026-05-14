@@ -1,7 +1,7 @@
 ---
 name: Angular Migration Assessment
 description: >
-  Analyzes an Angular project to assess its readiness for an incremental migration from v16 to v21.
+  Analyzes an Angular project to assess its readiness for the active v17 -> v18 migration (historical v16→v21 notes retained for reference).
   This skill focuses on identifying legacy patterns, dependency issues, and configuration problems that could block the migration.
   It generates a detailed assessment report that serves as the foundation for the planning phase.
 
@@ -12,7 +12,7 @@ tasks:
   - task: Analyze `package.json` for outdated `@angular/*` packages and third-party dependencies.
     instructions:
       - Read `package.json`.
-      - Compare installed versions against the required versions for each incremental step (v16->v17, v17->v18, etc.).
+      - Compare installed versions against the required versions for the active step (v17->v18). Historical multi-step comparisons are retained in the report for reference.
       - Flag any dependencies that are known to be incompatible with target Angular versions.
     files:
       - `package.json`

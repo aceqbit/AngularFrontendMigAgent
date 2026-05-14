@@ -3,7 +3,7 @@ scope: global-migration
 name: Migration Context Memory
 
 ## Purpose
-To store high-level, cross-cutting knowledge about the Angular v16 to v21 migration process. This memory is accessible to all agents and provides overarching context and strategies.
+To store high-level, cross-cutting knowledge to support the active Angular v17 -> v18 migration. Broader v16→v21 knowledge remains available in this memory as historical context and reference.
 
 ## Active Scope Note
 The active workspace migration target is Angular **v17 -> v18 only**. Broader v16 -> v21 knowledge remains available as historical context for reference.

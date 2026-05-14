@@ -29,6 +29,6 @@ Records all migration steps and architectural refactors for future reference, en
 
 ### Outputs
 - **Migration Documentation (Markdown):** 
-  - Comprehensive history of the v16→v21 technical journey.
+  - Comprehensive history of the v17→v18 technical journey (historical v16→v21 record retained for reference).
   - Lessons learned and adopted patterns summarized by phase.
-- **must include** - Generated in `docs/documentation.md`.
+- **must include** - Generated in `docs/documentation.md`. 
