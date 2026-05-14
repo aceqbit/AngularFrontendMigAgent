@@ -5,8 +5,8 @@ name: Assessment Agent Memory
 ## Purpose
 To store learnings and observations for the Assessment Agent. This memory helps the agent recognize recurring or unusual project structures and improve the accuracy of its assessment over time.
 
-## Workspace Specialization Note
-Use this memory to record only Angular **v16 -> v17** assessment findings in this workspace specialization.
+## Active Scope Note
+This memory is currently focused on Angular **v17 -> v18 only**. Any broader migration references should be treated as historical context unless explicitly reclassified.
 
 ## Memory Structure
 

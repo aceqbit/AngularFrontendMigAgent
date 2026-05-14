@@ -1,14 +1,11 @@
 ## SECTION 2: PLANNING AGENT
 name: planning-agent
 
+### Active Scope Note
+This planner is specialized for Angular **v17 -> v18 only** in this workspace. Broader v16 -> v21 planning text remains historical and should not drive the active plan.
+
 ### Purpose
-Constructs a phased, dependency-aware migration roadmap for the active migration target. (Workspace-specialized to v16→v17 by default.)
-
-### Focused Purpose & Rationale
-This planning agent now focuses on producing a clear, atomic plan for the v16→v17 migration. The original multi-version wording (16→21) is retained as historical reference, but the active behavior is to generate and validate only the v16→v17 plan unless explicitly asked to expand the scope.
-
-### Scope Specialization
-This agent is now authoritative for Angular **v16 -> v17 only** in this workspace specialization. Preserve the existing planning guidance as reference material, but treat v16 -> v17 as the only active migration target.
+Constructs a phased, dependency-aware migration roadmap from Angular 16 to 21, strictly enforcing an **incremental, step-by-step upgrade sequence**.
 
 ### Responsibilities
 - **Warning Budget:** Any migration-related build warning must be assigned a cleanup task or documented as an explicit follow-up so it does not survive the plan unnoticed.
@@ -16,16 +13,14 @@ This agent is now authoritative for Angular **v16 -> v17 only** in this workspac
 - **No-Stall Rule:** Ensure that the planning process does not stall by continuously assessing progress and adjusting tasks as necessary.
 - **Git After Version Rule:** After each version upgrade, enforce a check to ensure that the latest changes are committed and pushed to the repository.
 
-Note: In this workspace the "version rule" applies to the v16→v17 checkpoint. Further version checkpoints are historical recommendations.
-
 ### Planning Addendum
 - Keep the optional migration prompt on automatic default selection mode at all times.
 - Treat any migration-related build warning as a required cleanup item or explicit follow-up.
 - Require git status, commit, and push immediately after each successful version jump.
    - Assign risk levels and effort estimations to each task based on manual step complexity.
-  - Define validation gates (build/test verification) for the **v16 -> v17** migration. (Historical: multi-version gates are documented for larger migrations.)
-2. Historical: **v21 Final Transition Roadmap**
-  - TRIGGER ONLY in the historical multi-version workflow. This section is retained for future reference and is not part of the active v16→v17 plan.
+   - Define validation gates (build/test verification) for **each intermediate version**.
+2. **v21 Final Transition Roadmap**
+   - TRIGGER ONLY for the final roadmap phase.
    - **SEQUENCING & RISK PLANNING (Timing Focus):**
      - 1. Final Alignment: Group all `@angular/*` packages for a single-shot alignment.
      - 2. TS Upgrade: Schedule the move to exactly TypeScript 5.9.3.
@@ -38,17 +33,17 @@ Note: In this workspace the "version rule" applies to the v16→v17 checkpoint. 
 3. Validate that the plan follows the strict incremental sequence.
 
 ### Outputs
-  - Ordered task list with effort, risks, and validation criteria for v16→v17.
-  - (Historical) Detailed v21 transition sequence retained for reference.
+  - Ordered task list with effort, risks, and validation criteria.
+  - Detailed v21 transition sequence.
   - Manual step cross-references.
 
 ### Input Processing: Assessment Report
 The Planning Agent's first responsibility is to ingest the `assessment_report.md`. This report is the single source of truth for the current state of the project.
 
 ### Per-Version Migration Plans (Markdown):
-  - Active (v16→v17): generate `plan/migration_v16_to_v17.md` — v16→v17 migration with its own gates, rollback, and success criteria.
-  - Historical (reference only): v17→v18 .. v20→v21 plan templates and notes are preserved in the repository but are NOT generated or executed by default in this workspace specialization.
-  - **CRITICAL (active rule)**: The v16→v17 plan file must be ATOMIC and INDEPENDENT. No cross-version dependencies should be introduced into the active plan.
+  - Generate independent migration plans as needed. For this workspace the active plan is `plan/migration_v17_to_v18.md`.
+    - Historical per-version plans (v16→v17, v18→v19, v19→v20, v20→v21) are kept in the repository for reference but are not the active execution targets.
+  - **CRITICAL**: Each plan file is ATOMIC and INDEPENDENT. No cross-version dependencies.
   - Each plan includes: Phase breakdown, validation gates, rollback triggers, git checkpoint names, success criteria, specific file changes for THAT version only.
   - Each plan must explicitly state which version it targets and the next version to attempt after success.
 ### Master Index (Markdown):
@@ -150,6 +145,8 @@ A robust rollback strategy is critical for maintaining stability during a comple
     - 2. **Hard reset to the last known good tag:** `git reset --hard v17-stable`
     - 3. **Clean the workspace:** `rimraf node_modules package-lock.json dist`
     - 4. **Reinstall:** `npm install`
+    
+    **Why `git reset --hard v17-stable` is specified:** This command is an emergency last-resort to return the workspace to the last accepted checkpoint. Prefer `git revert` or restoring from a stable tag via a new branch for non-emergency recoveries; `reset --hard` rewrites local history and should only be used when you are certain uncommitted work can be discarded.
   - This approach is destructive but guarantees a clean slate. It should be used as a last resort when `git revert` is too complex.
 - **Automated Rollback Scripts:** For a fully automated process, the implementation agent should have the ability to generate and execute a rollback script based on the current migration phase. The script would use the `checkpoint` tags to revert the codebase to the last stable state.
 - **100% Test Suite Pass Rate:** All unit and end-to-end tests must pass. Test coverage should not decrease.

@@ -5,8 +5,8 @@ name: Planning Agent Memory
 ## Purpose
 To capture learnings from the execution of migration plans. This memory helps the Planning Agent refine its strategies, improve task sequencing, and make more accurate risk assessments.
 
-## Workspace Specialization Note
-Use this memory to guide only the Angular **v16 -> v17** plan in this workspace specialization.
+## Active Scope Note
+This memory is currently focused on Angular **v17 -> v18 only**. Preserve older migration notes as history, but do not treat them as the active planning scope.
 
 ## Memory Structure
 

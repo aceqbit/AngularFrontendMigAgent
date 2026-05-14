@@ -2,6 +2,9 @@
 
 This document records the issues and solutions encountered during the Angular migration process.
 
+## Active Scope Note
+The current active migration focus is Angular **v17 -> v18 only**. The notes below include historical broader migration context and should be read accordingly.
+
 ## Key Issues
 
 ### 1. Inconsistent Bootstrapping

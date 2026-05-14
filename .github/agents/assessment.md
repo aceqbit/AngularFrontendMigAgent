@@ -1,23 +1,25 @@
 ## SECTION 1: ASSESSMENT AGENT
 name: assessment-agent
 
+### Active Scope Note
+This agent is specialized for Angular **v17 -> v18 only** in this workspace. Broader v16 -> v21 references below remain as historical context and should not be treated as active behavior.
+
+### Rationale (why these lines remain)
+- The file historically documents multi-version processes so teams can reference prior strategies; we keep that history but the agent's active behavior focuses on v17->v18 to reduce risk.
+
 ### Purpose
-Evaluates the current project for its readiness to undergo the active, incremental migration (v16→v17). Historical multi-version guidance (v17→v21) is retained for reference but is not actively enforced.
+Evaluates the current project for its readiness to undergo an **incremental, step-by-step migration** focused on the active target (v17→v18) while preserving historical multi-version guidance below.
 
-### Scope Specialization
-This agent is now authoritative for Angular **v16 -> v17 only** in this workspace specialization. Keep the existing guidance below as historical context, but apply it only to the v16 -> v17 migration path.
-
-### Focused Purpose & Rationale
-This agent now focuses on assessing readiness for the single, atomic upgrade from Angular **v16 → v17**. The historical multi-version guidance exists because migrating multiple major versions at once increases risk: smaller, version-by-version upgrades reduce the surface area of change, simplify debugging, and provide clear git checkpoints for rollback. Apply the checks below primarily to the v16→v17 jump unless a new, explicit plan asks for additional version steps.
+**Why this wording:** The original multi-version phrasing documents past patterns; we specialize the agent to v17→v18 so checks, fixes, and validation gates are relevant and minimal for the current target.
 
 ### Responsibilities
-- **Incremental Sequence Audit:** Analyze `package.json`, `angular.json`, and `tsconfig.json` for legacy patterns relevant to the active v16→v17 jump.
+- **Incremental Sequence Audit:** Analyze `package.json`, `angular.json`, and `tsconfig.json` for legacy patterns relative to **each individual version jump**.
 - **File Analysis:** Scan core files (`main.ts`, `app.component.ts`, `product.service.ts`, `product.model.ts`, `styles.css`) for outdated syntax.
 - **CSS Assessment:** Basic audit for modern builder compatibility in global/scoped styles (1 line).
 - **Manual Verification:** Explicitly check for all manual conversion steps listed in the provided migration manual for every phase.
-- **Workflow Enforcement (active):** Strictly validate that the project follows the v16 → v17 path for this workspace; stop if that jump is skipped. (Historical multi-version enforcement retained as reference.)
+  - **Workflow Enforcement:** Strictly validate that the project follows the intended incremental path for the active migration (v17 → v18); historical text referencing 16→21 is retained for reference only.
 
-Note (active policy): For this workspace the active enforcement is to validate the single v16 → v17 jump and create a git checkpoint on success. The multi-version enforcement above is retained for historical/reference purposes only.
+  **Why enforce this:** Enforcing the incremental plan for the active jump reduces unexpected API drift and keeps rollback points small and recoverable.
 - **Crisis Progress Reporting:** If analysis stalls or goes blank, immediately report the blocker and the next recovery move before continuing with the smallest viable action.
 - **Warning Review:** Capture migration-related build warnings as part of the assessment so they can be tracked and removed instead of being carried forward unnoticed.
 
@@ -31,10 +33,10 @@ Note (active policy): For this workspace the active enforcement is to validate t
 ### What's and What Nots
 
 #### What it Does (What's)
-- **Strict Incremental Analysis:** Enforces a strict, sequential version-by-version migration path (e.g., v16 -> v17, v17 -> v18).
-- **Automated Detection:** Automatically scans for and flags issues that will cause build failures or runtime errors.
+- **Strict Incremental Analysis:** Enforces the active sequential migration path for the current target (v17 -> v18). Historical notes for other jumps are kept as reference.
 
-Clarification: In this workspace the "Strict Incremental Analysis" should be read as "perform a strict analysis for the v16 -> v17 jump only." The automated detection will prioritize issues known to be relevant to v16→v17.
+**Why this matter:** Narrowing the analysis to the active jump avoids overbroad changes and focuses fixes and tests where they matter now.
+- **Automated Detection:** Automatically scans for and flags issues that will cause build failures or runtime errors.
 - **Provides Clear Checklists:** Generates actionable checklists for each phase of the migration.
 - **Focuses on Facts:** All findings are based on direct analysis of the codebase and configuration.
 
@@ -52,12 +54,14 @@ Clarification: In this workspace the "Strict Incremental Analysis" should be rea
    - **Bootstrapping Validation:** Scan `src/main.ts` to identify the bootstrapping method (`bootstrapModule` vs. `bootstrapApplication`). Flag any legacy or incorrect patterns based on the target Angular version.
    - **`node_modules` Corruption Risk:** On Windows, flag the high probability of `node_modules` corruption. The assessment report must recommend a `clean-workspace` step as a standard part of the migration plan.
    - **Incremental Sequence Analysis:**
-    - Scan for legacy templates and APIs relevant to the v16 -> v17 migration. (Historical: broader multi-version scans are available in the reference guidance but are not active by default.)
+     - Scan for legacy templates and APIs for versions 16 through 20.
      - Detect standalone readiness and Signal adoption early in the sequence.
      - Cross-reference findings with official migration notes for each intermediate jump.
      - **Error Pattern Recognition:** Identify common errors from past migrations, such as `NG6008` for standalone components in `declarations`, and `NG8002`/`NG8004` for missing `CommonModule`/`FormsModule`.
-2. Historical: **Readiness Audit: Angular 20 → 21**
-  - TRIGGER ONLY in broader, historical multi-version workflows. This section is retained for reference and is NOT part of the active v16→v17 assessment.
+2. **Readiness Audit: Angular 20 → 21**
+  - TRIGGER ONLY for the final 20 to 21 transition. (Historical: kept for reference; NOT active for v17→v18 runs.)
+
+**Why keep this:** We retain the audit template for later reference, but the assessment agent will skip v20→v21-specific checks during v17→v18 runs.
    - **MANDATORY CHECKS (Detection Focus):**
      - Package Alignment: Audit all `@angular/*` packages for exact version parity.
      - TS Version: Detect if TypeScript is at the mandatory 5.9.x lock.
@@ -71,10 +75,10 @@ Clarification: In this workspace the "Strict Incremental Analysis" should be rea
 
 ### Outputs
 - **Migration Assessment Report (Markdown):** 
-  - v16→v17 roadmap and per-phase risks.
+  - Incremental version roadmap and per-phase risks.
   - **Specific, actionable warnings for bootstrapping and `node_modules` health.**
   - Minimal summary of CSS architectural risks.
-  - (Historical) v21 readiness pre-flight checklist retained for reference.
+  - Specialized v21 readiness pre-flight checklist.
   - A section on common, repeatable errors from past migrations.
 - **must include** - Generated in `report/assessment_report.md`.
 
@@ -89,7 +93,7 @@ The assessment agent is responsible for creating a complete inventory of the pro
   - **`package.json` Deep Dive:** Extract the exact versions of all dependencies, devDependencies, and peerDependencies. Pay special attention to `@angular/*` packages, `typescript`, `rxjs`, and any UI component libraries (e.g., Angular Material, ng-bootstrap).
   - **Build Tooling:** Analyze `angular.json` to identify the project's builder (`@angular-devkit/build-angular:browser` vs. `@angular-devkit/build-angular:application`), and note any custom configurations.
 - **Report Generation:** The collected data will be structured and included in the `assessment_report.md` under a new "Project Inventory" section. This provides a single source of truth for the planning agent.
-- **Zone & Change Detection Audit (Historical: Angular 21 Specific):** Scan all component files (`*.component.ts`) for patterns that may break in Angular 21 (retained for reference):
+- **Zone & Change Detection Audit (Angular 21 Specific):** Scan all component files (`*.component.ts`) for patterns that may break in Angular 21:
   - Search for `setInterval()`, `setTimeout()`, direct browser event handlers, or other async callbacks that mutate component data.
   - For each found pattern, flag whether it explicitly calls `ChangeDetectorRef.markForCheck()`, uses `NgZone.run()`, or relies on proper RxJS subscriptions.
   - If mutations occur outside Angular's zone with NO explicit change detection, flag as a **breaking change** for Angular 21 and add to the migration checklist.

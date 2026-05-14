@@ -5,8 +5,8 @@ name: Implementation Agent Memory
 ## Purpose
 To record successful solutions and workarounds for specific, unexpected errors encountered during the implementation phase. This memory serves as a knowledge base for resolving future technical challenges.
 
-## Workspace Specialization Note
-Use this memory to capture only Angular **v16 -> v17** implementation findings in this workspace specialization.
+## Active Scope Note
+This memory is currently focused on Angular **v17 -> v18 only**. Older version-jump references remain useful as history but should not override the active migration target.
 
 ## Memory Structure
 

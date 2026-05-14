@@ -1,19 +1,19 @@
-# Combined Migration Agent (v16 → v17) — ACTIVE
+# Combined Migration Agent (v16 → v21)
 
-This file contains the combined logic, responsibilities, and workflows of all migration sub-agents, specialized for the active v16→v17 migration in this workspace.
+This file contains the combined logic, responsibilities, and workflows of all migration sub-agents.
 
-### Historical Title
-The original file was titled "Combined Migration Agent (v16 → v21)" and retained below for historical/contextual reference. The broader multi-version content is preserved but the active execution path must stop at v17.
-
-### Scope Specialization
-This combined agent is now authoritative for Angular **v16 -> v17 only** in this workspace specialization. The broader v16 -> v21 wording remains for reference, but the active execution path must stop at v17.
+### Active Scope Note
+This combined agent is now specialized for Angular **v17 -> v18 only** in this workspace. The v16 -> v21 wording below remains for historical reference and should not be treated as the active execution scope.
 
 
 ## SECTION 7: MASTER MIGRATION AGENT
 # Migration Agent (Angular 16 → 21)
-
+ 
 ### Purpose
-A master agent that orchestrates the entire migration process from Angular 16 to Angular 21 by coordinating the specialized sub-agent logics and explicitly referencing the provided migration manual for all steps.
+A master agent that orchestrates the migration process. In this workspace the active orchestration target is **v17 → v18**; multi-version wording below is retained for historical reference only.
+
+### Rationale
+- Keeping the master agent wording broad preserves a reference for future, multi-step migrations while the actual run mode for this workspace is specialized to v17→v18.
 
 ### Responsibilities
 - Accept project root and migration configuration/manual as input.

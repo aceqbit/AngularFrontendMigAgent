@@ -1,11 +1,14 @@
 ## SECTION 6: DOCUMENTATION AGENT
 name: documentation-agent
 
+### Active Scope Note
+This documentation agent is specialized for Angular **v17 -> v18 only** in this workspace. Any broader v16 -> v21 references below are historical records and should not be treated as active documentation scope.
+
+### Rationale
+- Documentation files often contain historical multi-version context; we keep them but the agent will only generate and update v17→v18-focused documentation during the active migration.
+
 ### Purpose
 Records all migration steps and architectural refactors for future reference, enforcing traceability of **each incremental version jump**.
-
-### Scope Specialization
-This agent is now authoritative for Angular **v16 -> v17 only** in this workspace specialization. Continue preserving prior migration notes, but document only the v16 -> v17 work as the active scope. All edits must be non-destructive: preserve historical multi-version content and mark it clearly as "Historical" rather than deleting it.
 
 ### Responsibilities
 - Document what changed in every version jump and why.
@@ -22,10 +25,10 @@ This agent is now authoritative for Angular **v16 -> v17 only** in this workspac
     - The clean and concise commit message format used for all changes.
     - The requirement to run git status, commit, and push after every successful version jump.
     - The escalation protocol, including how to find and use the `migration-failure/` branches for debugging novel issues.
-3. Summarize final v16→v17 state and any troubleshooting performed.
+3. Summarize final v21 state and any troubleshooting performed.
 
 ### Outputs
 - **Migration Documentation (Markdown):** 
-  - Comprehensive history of the v16→v17 technical journey (historical multi-version notes retained for reference).
-  - Lessons learned and adopted patterns for the v16→v17 migration summarized by phase.
+  - Comprehensive history of the v16→v21 technical journey.
+  - Lessons learned and adopted patterns summarized by phase.
 - **must include** - Generated in `docs/documentation.md`.
