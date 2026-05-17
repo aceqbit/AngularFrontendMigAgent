@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 interface WidgetMetric {
@@ -19,7 +19,7 @@ export class DashboardWidgetsComponent implements OnInit, OnDestroy {
   metrics: WidgetMetric[] = [];
   intervalId: any;
   
-  constructor() { }
+  constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.initMetrics();
@@ -51,6 +51,8 @@ export class DashboardWidgetsComponent implements OnInit, OnDestroy {
         m.history.push(newValue);
         if (m.history.length > 20) m.history.shift();
       });
+      // CRITICAL: Angular 18+ requires explicit change detection for setInterval mutations
+      this.cdr.markForCheck();
     }, 1000);
   }
 

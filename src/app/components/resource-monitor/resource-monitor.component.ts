@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 interface ResourceNode {
@@ -21,7 +21,7 @@ export class ResourceMonitorComponent implements OnInit, OnDestroy {
   nodes: ResourceNode[] = [];
   intervalId: any;
   
-  constructor() { }
+  constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.initNodes();
@@ -57,6 +57,8 @@ export class ResourceMonitorComponent implements OnInit, OnDestroy {
         else if (node.load < 5) node.status = 'idle';
         else node.status = 'active';
       });
+      // CRITICAL: Angular 18+ requires explicit change detection for setInterval mutations
+      this.cdr.markForCheck();
     }, 1500);
   }
 
