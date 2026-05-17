@@ -1,12 +1,12 @@
-# Angular v18 → v19 Migration Implementation Log
+# Angular v19 → v20 Migration Implementation Log
 
 **Migration Date:** 2026-05-17  
 **Status:** PLANNED  
-**Target Version:** Angular v19.x  
+**Target Version:** Angular v20.x  
 
 ## Executive Summary
 
-This log will track the implementation steps for the focused migration from Angular 18 to Angular 19. Use it to record commands run, package versions installed, build outputs, test results, and any issues encountered during the migration.
+This log will track the implementation steps for the focused migration from Angular 19 to Angular 20. Use it to record commands run, package versions installed, build outputs, test results, and any issues encountered during the migration.
 
 ## Phase 1: Dependency Updates (Template)
 
@@ -14,7 +14,7 @@ This log will track the implementation steps for the focused migration from Angu
 
 Command to execute when ready:
 ```bash
-ng update @angular/core@19 @angular/cli@19 --allow-dirty --force
+ng update @angular/core@20 @angular/cli@20 --allow-dirty --force
 ```
 
 ### Dependency Validation (to fill during run)
@@ -56,7 +56,7 @@ Record test results and counts here after running.
 
 If a gate fails, rollback to the pre-migration checkpoint:
 ```bash
-git reset --hard v18-stable
+git reset --hard v19-stable
 npx rimraf node_modules package-lock.json
 npm install
 ```
@@ -65,3 +65,11 @@ npm install
 
 **Migration Status:** PLANNED — populate this log while performing the migration steps.
 
+## Automation
+
+- Created automation script: `scripts/migrate_v19_to_v20.ps1` — non-interactive PowerShell script that runs the update, builds, tests, and tags. Do not run without review on developer machine.
+- NPM script: `migrate:v19-to-v20` added to `package.json` to invoke the PowerShell script on Windows.
+
+2026-05-17T13:59:51.8403361+05:30 - === Starting migration: Angular 19 -> 20 ===
+2026-05-17T13:59:51.9140891+05:30 - Phase 0: git pre-checkpoint
+2026-05-17T13:59:52.0768699+05:30 - Creating pre-migration checkpoint v19-stable

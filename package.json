@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "migrate:v19-to-v20": "powershell -ExecutionPolicy Bypass -File .\\scripts\\migrate_v19_to_v20.ps1"
   },
   "private": true,
   "dependencies": {

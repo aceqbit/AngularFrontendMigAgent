@@ -1,10 +1,10 @@
-# Angular v18 → v19 Migration Assessment Report
+# Angular v19 → v20 Migration Assessment Report
 
 **Assessment Date:** May 17, 2026  
-**Current Angular Version:** 18.x.x  
-**Target Angular Version:** 19.x.x  
-**TypeScript Version:** (follow Angular 19 guidance)  
-**Assessment Scope:** v18 → v19 ONLY (Focused Migration)
+**Current Angular Version:** 19.x.x  
+**Target Angular Version:** 20.x.x  
+**TypeScript Version:** (follow Angular 20 guidance)  
+**Assessment Scope:** v19 → v20 ONLY (Focused Migration)
 
 ---
 
@@ -20,26 +20,26 @@
 
 ## 1. Package Version Analysis & Required Updates
 
-### Current Package Guidance (v18 → v19)
-- Update all `@angular/*` packages to v19 per Angular update guidance.
-- Update `@angular/cli` and `@angular-devkit/build-angular` to v19-compatible releases.
-- Update TypeScript to the version recommended by Angular 19.
+### Current Package Guidance (v19 → v20)
+- Update all `@angular/*` packages to v20 per Angular update guidance.
+- Update `@angular/cli` and `@angular-devkit/build-angular` to v20-compatible releases.
+- Update TypeScript to the version recommended by Angular 20.
 
 ### Update Commands (example)
 ```bash
-ng update @angular/core@19 @angular/cli@19 --allow-dirty --force
+ng update @angular/core@20 @angular/cli@20 --allow-dirty --force
 npm install
 ```
 
 ---
 
-## 2. Critical Breaking Changes: v18 → v19
+## 2. Critical Breaking Changes: v19 → v20
 
 ### 🔴 **CRITICAL: Change Detection Behavior Changes**
 
 **Impact Level:** CRITICAL — Component UI updates will fail silently.
 
-Angular 19 enforces stricter change detection boundaries for data mutations **outside Angular's zone** (e.g., `setInterval()`, `setTimeout()` callbacks, browser event handlers).
+Angular 20 enforces stricter change detection boundaries for data mutations **outside Angular's zone** (e.g., `setInterval()`, `setTimeout()` callbacks, browser event handlers).
 
 **Components Affected:**
 1. **[dashboard-widgets.component.ts](../src/app/components/dashboard-widgets/dashboard-widgets.component.ts#L46)**
@@ -76,7 +76,7 @@ Angular 19 enforces stricter change detection boundaries for data mutations **ou
    - **Risk:** Node status indicators will **not update** in Angular 18
    - **Fix Required:** Add `ChangeDetectorRef.markForCheck()` after mutations
 
-**Root Cause:** Angular 18's change detection strategy does not automatically detect mutations from native browser APIs (`setInterval`, `setTimeout`, direct DOM events). These callbacks run **outside Angular's zone** and require explicit change detection triggers.
+**Root Cause:** Angular 19's change detection strategy does not automatically detect mutations from native browser APIs (`setInterval`, `setTimeout`, direct DOM events). These callbacks run **outside Angular's zone** and require explicit change detection triggers.
 
 **Solution Pattern:**
 ```typescript
@@ -115,14 +115,14 @@ export class YourComponent implements OnInit, OnDestroy {
 **Conflict:**
 - `main.ts` imports `provideZoneChangeDetection` but doesn't use it (suggests partial conversion)
 - `app.module.ts` still uses traditional NgModule pattern with empty `declarations` array
-- `app.component.ts` is standalone
-- **This mixed pattern is unstable in v19**
+-- `app.component.ts` is standalone
+-- **This mixed pattern is unstable in v20**
 
 **Fix Required:** Choose ONE approach:
-1. **Option A (Recommended for v19):** Migrate to **standalone bootstrap**
-   - Remove `app.module.ts`
-   - Use `bootstrapApplication()` in `main.ts`
-   - Enables full v18 optimizations
+1. **Option A (Recommended for v20):** Migrate to **standalone bootstrap**
+  - Remove `app.module.ts`
+  - Use `bootstrapApplication()` in `main.ts`
+  - Enables full v19/20 optimizations
 
 2. **Option B:** Keep NgModule bootstrap but fix app.module.ts
    - Move components to `declarations` array (not `imports`)
@@ -146,14 +146,14 @@ export class YourComponent implements OnInit, OnDestroy {
 
 ---
 
-### 🟡 **Deprecated APIs Removed in v19**
+### 🟡 **Deprecated APIs Removed in v20**
 
-| Deprecated (v18) | Removed (v19) | Affected Code | Severity |
+| Deprecated (v19) | Removed (v20) | Affected Code | Severity |
 |------------------|---------------|--------------|----------|
 | `platformBrowserDynamic().bootstrapModule()` | **Removed** (use `bootstrapApplication()` instead) | [main.ts](../src/main.ts) | HIGH |
 | Old change detection patterns | **Removed** (requires explicit triggers) | [dashboard-widgets.component.ts](../src/app/components/dashboard-widgets/dashboard-widgets.component.ts), [resource-monitor.component.ts](../src/app/components/resource-monitor/resource-monitor.component.ts) | **CRITICAL** |
 | CommonModule in standalone imports (redundant) | Deprecated warning (not removed) | Multiple standalone components | LOW |
-| `@angular/router` lazy loading syntax | Updated in v18 | [app-routing.module.ts](../src/app/app-routing.module.ts) | MEDIUM |
+| `@angular/router` lazy loading syntax | Updated in v19 | [app-routing.module.ts](../src/app/app-routing.module.ts) | MEDIUM |
 
 ---
 
@@ -167,8 +167,8 @@ export class YourComponent implements OnInit, OnDestroy {
 ## 4. Build Configuration Analysis
 
 ### Current angular.json
-- **Builder:** `@angular-devkit/build-angular:browser` ✅ Compatible with v19
-- **Polyfills:** `zone.js` only ✅ Correct for v19
+- **Builder:** `@angular-devkit/build-angular:browser` ✅ Compatible with v20
+- **Polyfills:** `zone.js` only ✅ Correct for v20
 - **TypeScript Config:** Uses `tsconfig.app.json` ✅ Correct
 - **Output Path:** `dist/frontend` ✅ Fine
 - **CSS Styles:** `src/styles.css` ✅ Compatible
@@ -226,7 +226,7 @@ export class DashboardWidgetsComponent implements OnInit, OnDestroy {
 }
 ```
 
-**Why It Breaks in v18:**
+**Why It Breaks in v19:**
 - Angular 18's change detection does NOT automatically run after `setInterval()` callbacks
 - The component's template shows `{{ metric.value }}`, but the view will show **stale data**
 
@@ -254,7 +254,7 @@ export class DashboardWidgetsComponent implements OnInit, OnDestroy {
         m.history.push(newValue);
         if (m.history.length > 20) m.history.shift();
       });
-      // ← REQUIRED in v18
+      // ← REQUIRED in v19
       this.cdr.markForCheck();
     }, 1000);
   }
@@ -300,7 +300,7 @@ export class ResourceMonitorComponent implements OnInit, OnDestroy {
 }
 ```
 
-**Why It Breaks in v18:**
+**Why It Breaks in v19:**
 - Same issue as dashboard: `setInterval()` mutations are not detected
 - Node status colors and values will appear **frozen** in the UI
 
@@ -331,7 +331,7 @@ export class ResourceMonitorComponent implements OnInit, OnDestroy {
         else if (node.load < 5) node.status = 'idle';
         else node.status = 'active';
       });
-      // ← REQUIRED in v18
+      // ← REQUIRED in v19
       this.cdr.markForCheck();
     }, 1500);
   }
@@ -367,7 +367,7 @@ onInput() {
 ```
 
 **Assessment:**
-- ✅ Likely **safe in v18** because the mutations are followed by `this.groupResults()` which updates view properties
+-- ✅ Likely **safe in v19** because the mutations are followed by `this.groupResults()` which updates view properties
 - The binding in template to `this.results` and `this.isLoading` will likely trigger change detection
 - Monitor during testing; if results don't appear, add `ChangeDetectorRef.markForCheck()` after `this.isLoading = false`
 
@@ -409,7 +409,7 @@ export class AutoCompleteComplexComponent {
 - **Risk:** Heavy data manipulation may cause performance issues or undetected changes
 
 **Assessment:**
-- ✅ No immediate breaking changes required for v18
+-- ✅ No immediate breaking changes required for v19
 - 🟡 Monitor performance during testing; consider `OnPush` change detection if performance degrades
 
 **Optional Optimization:**
@@ -457,7 +457,7 @@ constructor() {
 ```
 
 **Assessment:**
-- ✅ **Safe in v18** — Uses RxJS `interval()` which is zone-aware
+- ✅ **Safe in v19** — Uses RxJS `interval()` which is zone-aware
 - `BehaviorSubject.next()` properly triggers change detection in subscribed components
 - No changes required
 
@@ -466,7 +466,7 @@ constructor() {
 ## 8. Test Framework Updates
 
 ### Current Testing Setup
-| Tool | Current | v18 Compatible | Status |
+| Tool | Current | v19 Compatible | Status |
 |------|---------|----------------|--------|
 | Jasmine | 5.1.0 | 5.1.0 | ✅ COMPATIBLE |
 | Karma | 6.4.0 | 6.4.x | ✅ COMPATIBLE |
@@ -500,9 +500,9 @@ describe('DataGridComponent Stress Test', () => {
 });
 ```
 
-**Status:** ✅ Already using v18+ standalone component test pattern (correct for v19)
+**Status:** ✅ Already using v19+ standalone component test pattern (correct for v20)
 
-**New Tests Required for v18:**
+**New Tests Required for v19:**
 
 After fixing the change detection issues, add these tests:
 
@@ -556,10 +556,10 @@ describe('DashboardWidgetsComponent - Change Detection', () => {
 **Current Status:**
 - ✅ Uses modern CSS (Flexbox, CSS Grid compatible)
 - ✅ Global imports from Google Fonts
-- ✅ CSS custom properties not required for v18
+- ✅ CSS custom properties not required for v19
 - ✅ Animation patterns compatible
 
-**Assessment:** No CSS changes required for v18 migration.
+**Assessment:** No CSS changes required for v19→v20 migration.
 
 **Windows-Specific Note:** On Windows systems, `node_modules` may become corrupted during large dependency updates. Mitigation:
 ```bash
@@ -580,7 +580,7 @@ npm install
 - [ ] On Windows: Prepare for potential `node_modules` deletion issues
 
 ### Phase 1: Package Updates
-- [ ] Update all `@angular/*` packages to v19
+-- [ ] Update all `@angular/*` packages to v20
 - [ ] Update TypeScript per Angular 19 recommendation
 - [ ] Run `npm install` and verify peer dependencies
 
@@ -604,9 +604,9 @@ npm install
 - [ ] Run manual UI checks across key pages
 
 ### Post-Migration Checklist
-- [ ] Commit changes: `git commit -m "chore: complete Angular v19 migration"`
+-- [ ] Commit changes: `git commit -m "chore: complete Angular v20 migration"`
 - [ ] Push to repository: `git push origin main`
-- [ ] Tag release: `git tag -a v19-stable`
+-- [ ] Tag release: `git tag -a v20-stable`
 - [ ] Update documentation
 
 ---
@@ -620,7 +620,7 @@ npm install
 | TypeScript config | 🟡 HIGH | Update moduleResolution to "bundler" | 2 min |
 | Package version conflicts | 🟡 HIGH | Run `ng update` with proper sequence | 5 min |
 | Performance regression | 🟡 MEDIUM | Monitor during testing; verify no missed change detection | 30 min |
-| Test framework compatibility | 🟢 LOW | All tools already compatible with v18 | 0 min |
+| Test framework compatibility | 🟢 LOW | All tools already compatible with v19 | 0 min |
 | CSS compatibility | 🟢 LOW | No changes required | 0 min |
 
 ---
@@ -652,7 +652,7 @@ npm install
 16. **file-explorer.component.ts** — File browser (standalone)
 
 #### Services
-- **shared-data.service.ts** — Global state & pulses (RxJS-based, safe for v18)
+- **shared-data.service.ts** — Global state & pulses (RxJS-based, safe for v19)
 
 #### Test Files
 - **data-grid.component.spec.ts** — Component stress tests
@@ -748,7 +748,7 @@ this.cdr.markForCheck();
 
 ---
 
-## 16. Success Criteria for v18 Migration
+## 16. Success Criteria for v19 Migration
 
 ✅ **Build Criteria:**
 - `ng build` completes with 0 errors
@@ -789,14 +789,14 @@ this.cdr.markForCheck();
 | src/app/app.component.ts | Root component | ✅ Already standalone |
 | src/app/components/dashboard-widgets/ | Polling component | 🔴 CRITICAL FIX |
 | src/app/components/resource-monitor/ | Polling component | 🔴 CRITICAL FIX |
-| src/app/shared-data.service.ts | Global service | ✅ Safe for v18 |
+| src/app/shared-data.service.ts | Global service | ✅ Safe for v19 |
 | src/styles.css | Global styles | ✅ No changes needed |
 
 ---
 
 ## Conclusion
 
-The Angular v18 → v19 migration is **achievable in ~90 minutes** with careful execution. The **primary risk** is the change detection issue in polling-based components (dashboard-widgets and resource-monitor), which will cause **frozen UI updates** if not addressed. Both issues have been clearly identified and should be addressed as part of the migration.
+The Angular v19 → v20 migration is **achievable in ~90 minutes** with careful execution. The **primary risk** is the change detection issue in polling-based components (dashboard-widgets and resource-monitor), which will cause **frozen UI updates** if not addressed. Both issues have been clearly identified and should be addressed as part of the migration.
 
 **Recommended Next Steps:**
 1. Review this assessment with the team
@@ -810,5 +810,5 @@ The Angular v18 → v19 migration is **achievable in ~90 minutes** with careful 
 ---
 
 **Report Generated:** May 17, 2026  
-**Assessment Agent:** Angular v18 → v19 Specialist  
+**Assessment Agent:** Angular v19 → v20 Specialist  
 **Next Action:** Begin Package Updates (Phase 1)

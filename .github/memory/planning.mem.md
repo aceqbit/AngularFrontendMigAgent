@@ -2,8 +2,11 @@
 scope: planning-agent
 name: Planning Agent Memory
 
+## Active Scope
+- Angular 19→20 migration only.
+
 ## Purpose
-To capture learnings from the execution of the Angular 18 → 19 migration plan. This memory helps the Planning Agent refine its strategies, improve task sequencing, and make more accurate risk assessments.
+To capture learnings from the execution of migration plans. This memory helps the Planning Agent refine its strategies, improve task sequencing, and make more accurate risk assessments.
 
 ## Memory Structure
 
@@ -34,6 +37,6 @@ keywords: [third-party, chart-library]
 The original plan scheduled the update of a critical third-party charting library *after* the main `@angular/core` update. This led to significant build failures that were difficult to debug.
 
 **Learned Improvement:**
-For projects with critical third-party UI libraries, the planning agent should prioritize their updates *before* or *concurrently with* the core Angular 19 update. This isolates potential compatibility issues early. The plan should now include a dedicated pre-flight phase for such dependencies.
+For projects with critical third-party UI libraries, the planning agent should prioritize their updates *before* or *concurrently with* the core Angular updates. This isolates potential compatibility issues early. The plan should now include a dedicated pre-flight phase for such dependencies.
 ```
 ---

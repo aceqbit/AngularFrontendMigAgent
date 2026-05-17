@@ -1,6 +1,10 @@
 # Skills Notes
 
-Active migration scope: Angular 18 → 19 only. This file is the master log for all skills. When a new skill is developed or an existing one is updated, the change **must** be logged here first. This log serves as the source of truth for propagating changes to the individual skill definition files.
+This file is the master log for all skills. When a new skill is developed or an existing one is updated, the change **must** be logged here first. This log serves as the source of truth for propagating changes to the individual skill definition files.
+
+## Current Migration Scope
+- Active Angular migration scope: v19→v20 only.
+- All skill updates should stay aligned to that single jump unless the scope is explicitly changed later.
 
 ## Skill Updates & Changelog
 
@@ -20,17 +24,17 @@ Active migration scope: Angular 18 → 19 only. This file is the master log for 
 - **Reason:** This was a frequent and repetitive error during the initial migration phases.
 - **Status:** Implemented.
 
-### Updated Skill Behavior: Optional Migration Prompts (18 → 19)
+### Updated Skill Behavior: Optional Migration Prompts
 - **Description:** Migration skills must automatically choose the recommended/default option, or the first option if no default is shown, when Angular presents an optional migration prompt.
 - **Reason:** The migration must never pause for user button presses.
 - **Status:** Implemented.
 
-### Updated Skill Behavior: Targeted Test Triage (18 → 19)
+### Updated Skill Behavior: Targeted Test Triage
 - **Description:** Unit-testing skills must start with the changed feature area or the first failing spec when the full suite becomes too broad or fails many modules at once.
 - **Reason:** The full suite was too heavy for some migration steps and caused unhelpful all-module failures.
 - **Status:** Implemented.
 
-### Updated Skill Behavior: Build Warning Cleanup (18 → 19)
+### Updated Skill Behavior: Build Warning Cleanup
 - **Description:** Build warnings tied to the migration must be treated as cleanup tasks or explicitly logged follow-ups instead of being ignored.
 - **Reason:** The migration should not leave unresolved warning debt behind.
 - **Status:** Implemented.

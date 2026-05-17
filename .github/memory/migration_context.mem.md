@@ -2,8 +2,11 @@
 scope: global-migration
 name: Migration Context Memory
 
+## Active Scope
+- Angular 19→20 migration only.
+
 ## Purpose
-To store high-level, cross-cutting knowledge about the Angular 18 → 19 migration process. This memory is accessible to all agents and provides overarching context and strategies.
+To store high-level, cross-cutting knowledge about the Angular v19 to v20 migration process. This memory is accessible to all agents and provides overarching context and strategies.
 
 ## Memory Structure
 
@@ -31,11 +34,11 @@ keywords: [standalone, refactoring]
 ---
 
 **Insight:**
-The migration should stay tightly scoped to the Angular 18 → 19 jump. Attempting to pull unrelated version work into the same run is high-risk and often leads to cascading failures.
+The transition to standalone components is a major architectural shift. Attempting to refactor the entire application to standalone in a single phase is high-risk and often leads to cascading failures.
 
 **Strategic Application:**
-- **Planning Agent:** Should keep the plan atomic and limited to the single 18 → 19 step.
-- **Implementation Agent:** Should perform the refactoring on the migration slice only, running tests after each meaningful change to ensure stability.
-- **Documentation Agent:** Should create a dedicated section on the 18 → 19 migration scope and the benefits it brings to the project.
+- **Planning Agent:** Should schedule standalone migration as a gradual, multi-phase process. Prioritize converting shared modules and core feature modules first.
+- **Implementation Agent:** Should perform the refactoring on a per-module basis, running tests after each conversion to ensure stability.
+- **Documentation Agent:** Should create a dedicated section on the new standalone architecture and the benefits it brings to the project.
 ```
 ---

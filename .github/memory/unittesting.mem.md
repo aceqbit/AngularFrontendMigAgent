@@ -2,8 +2,11 @@
 scope: unittesting-agent
 name: Unit Testing Agent Memory
 
+## Active Scope
+- Angular 19→20 migration only.
+
 ## Purpose
-To remember solutions for fixing specific test failures that occur after the Angular 18 → 19 migration. This helps the agent automate test-fixing and ensures the stability of the test suite.
+To remember solutions for fixing specific test failures that occur after an Angular migration. This helps the agent automate test-fixing and ensures the stability of the test suite.
 
 ## Memory Structure
 
@@ -37,7 +40,7 @@ keywords: [async, fakeAsync, tick]
 `Error: 1 timer(s) still in the queue.`
 
 **Context:**
-Testing a component that uses an async operation inside `ngOnInit` after migrating to Angular 19. The test was using `fakeAsync` and `tick()`.
+Testing a component that uses an async operation inside `ngOnInit` after migrating to Angular 17. The test was using `fakeAsync` and `tick()`.
 
 **Refactoring Solution:**
 The issue was resolved by ensuring that all asynchronous operations within the `fakeAsync` zone were properly flushed. The solution was to wrap the trigger for the async operation in `TestBed.runInInjectionContext` and ensure `tick()` was called after the async operation was initiated.
