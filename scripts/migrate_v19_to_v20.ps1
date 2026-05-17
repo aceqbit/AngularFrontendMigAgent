@@ -34,11 +34,21 @@ try {
 # Phase 1: Dependency updates
 Log "Phase 1: Running ng update @angular/core@20 @angular/cli@20"
 try {
+    # Stash any local changes to avoid 'repository not clean' errors
+    Log "Stashing local changes (including untracked)"
+    git stash push --include-untracked -m "pre-migration-stash-$(Get-Date -Format o)"
+    if ($LASTEXITCODE -eq 0) { $stashed = $true; Log "Local changes stashed" } else { $stashed = $false; Log "No stash created or stash command failed" }
+
     ng update @angular/core@20 @angular/cli@20 --allow-dirty --force 2>&1 | Tee-Object -FilePath $log -Append
     npm install 2>&1 | Tee-Object -FilePath $log -Append
 } catch {
     Log "Dependency update failed: $_"
     Log "Aborting migration. See $log"
+    # Try to restore stash if present
+    if ($stashed) {
+        Log "Attempting to pop stash after failure"
+        git stash pop 2>&1 | Tee-Object -FilePath $log -Append
+    }
     exit 2
 }
 
@@ -69,6 +79,15 @@ try {
     git add -A
     git commit -m "chore: complete Angular v20 migration" -q
     if ($LASTEXITCODE -ne 0) { Log "No new changes to commit" }
+    # If we stashed earlier, apply stash now and commit merged changes
+    if ($stashed) {
+        Log "Applying previously stashed local changes"
+        git stash pop 2>&1 | Tee-Object -FilePath $log -Append
+        if ($LASTEXITCODE -ne 0) { Log "Stash pop resulted in conflicts or failed; manual resolution required"; exit 4 }
+        git add -A
+        git commit -m "chore: merge stashed pre-migration changes" -q
+        if ($LASTEXITCODE -ne 0) { Log "No changes after applying stash to commit" }
+    }
     git tag -a v20-stable -m "Angular v20 stable"
     if ($LASTEXITCODE -ne 0) { Log "Tag v20-stable create/update may have failed" }
     Log "Migration complete. Please review logs in $log then push changes." 
