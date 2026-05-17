@@ -1,20 +1,19 @@
 ---
 name: Angular Migration Implementation
 description: >
-  Executes the Angular 19→20 migration plan by applying code and configuration changes in a controlled, step-by-step manner.
-  This skill is responsible for all file modifications, dependency updates, and build validations for that jump.
+  Executes the migration plan by applying code and configuration changes in a controlled, step-by-step manner.
+  This skill is responsible for all file modifications, dependency updates, and build validations.
 
 dependencies:
   - `planning.skill.md`
 
 inputs:
-  - `plan/migration_v19_to_v20.md`
   - `plan/migration_plan.md`
 
 tasks:
   - task: Execute tasks for the current migration phase.
     instructions:
-      - Read the active task from `plan/migration_v19_to_v20.md`.
+      - Read the next task from `plan/migration_plan.md`.
       - Apply the specified code or configuration changes to the relevant files.
       - Use tools to perform automated refactoring where possible.
       - If the CLI presents an optional migration prompt, always choose the recommended/default option or the first option, then continue without user input.
@@ -24,7 +23,7 @@ tasks:
     instructions:
       - Run `ng update` or `npm install` to update Angular and third-party packages as defined in the plan.
       - Use `--force` or `--legacy-peer-deps` only when explicitly instructed by the plan.
-      - After each completed version migration, run `git status`, create the commit, and push it before moving to the next version.
+      - After the Angular 20 → 21 migration completes, run `git status`, create the commit, and push it before closing the workflow.
 
   - task: Validate each step.
     instructions:
@@ -45,20 +44,16 @@ tasks:
 
   - task: Log all actions.
 
-    - task: Execute the active migration plan sequentially.
+    - task: Execute the final migration plan.
       instructions:
-        - Read `plan/migration_plan.md` to understand the master index for the active migration.
-        - Execute the v19→v20 plan only.
-        - For the active plan:
-          1. Read `plan/migration_v19_to_v20.md`
-          2. Execute ALL tasks in that plan fully, respecting all phases and validation gates
-          3. After all tasks complete, trigger the validation gates (build, test, lint) for that version
-          4. If ALL gates pass: Create git checkpoint with commit message "chore: complete Angular 20 migration"
-          5. Run `git push origin main` to push the checkpoint immediately
-          6. Verify git push succeeded before finalizing
-        - If any gate FAILS for the version, halt and escalate with the specific failure and recovery options.
-        - This atomic sequencing prevents catastrophic midway failures and keeps the migration scoped correctly.
-        - Log all version completions, gate results, and git checkpoints to `report/implementation_log.md`.
+        - Read `plan/migration_plan.md` to understand the final Angular 20 → 21 plan.
+        - Execute the plan fully, respecting all phases and validation gates.
+        - After all tasks complete, trigger the validation gates (build, test, lint) for the final jump.
+        - If ALL gates pass: Create git checkpoint with commit message "chore: complete Angular 21 migration".
+        - Run `git push origin main` to push the checkpoint immediately.
+        - Verify git push succeeded before closing the workflow.
+        - If any gate FAILS, halt and escalate with the specific failure and recovery options.
+        - Log the final completion, gate results, and git checkpoint to `report/implementation_log.md`.
 
     - task: Log all actions.
     instructions:
