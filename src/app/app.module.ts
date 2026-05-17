@@ -23,11 +23,7 @@ import { SettingsPanelComponent } from './components/settings-panel/settings-pan
 import { ResourceMonitorComponent } from './components/resource-monitor/resource-monitor.component';
 
 @NgModule({
-  declarations: [],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    AppRoutingModule,
+  declarations: [
     AppComponent,
     LayoutManagerComponent,
     DataGridComponent,
@@ -44,6 +40,11 @@ import { ResourceMonitorComponent } from './components/resource-monitor/resource
     NotificationHubComponent,
     SettingsPanelComponent,
     ResourceMonitorComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
