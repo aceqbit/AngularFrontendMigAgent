@@ -3,10 +3,7 @@ scope: documentation-agent
 name: Documentation Agent Memory
 
 ## Purpose
-To store project-specific documentation preferences and standards. This ensures that all generated documentation is consistent and meets the project's requirements.
-
-## Active Scope Note
-This memory is currently focused on Angular **v17 -> v18 only**. Keep historical documentation preferences intact, but apply the active scope to the current migration.
+To store project-specific documentation preferences and standards for the Angular 18 → 19 migration. This ensures that all generated documentation is consistent and meets the project's requirements.
 
 ## Memory Structure
 
@@ -37,6 +34,6 @@ keywords: [readme, deployment]
 The project's main `README.md` must always include a "Deployment" section that details the production build and deployment process.
 
 **Implementation Guideline:**
-When generating or updating documentation, the agent must verify that the `README.md` contains a `## Deployment` section. If it is missing, the agent should create it and add a placeholder prompting the user to fill in the details.
+When generating or updating documentation, the agent must verify that the `README.md` contains the migration notes and any required sections for the 18 → 19 jump. If a required section is missing, the agent should create it and add a placeholder prompting the user to fill in the details.
 ```
 ---

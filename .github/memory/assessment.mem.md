@@ -3,10 +3,7 @@ scope: assessment-agent
 name: Assessment Agent Memory
 
 ## Purpose
-To store learnings and observations for the Assessment Agent. This memory helps the agent recognize recurring or unusual project structures and improve the accuracy of its assessment over time.
-
-## Active Scope Note
-This memory is currently focused on Angular **v17 -> v18 only**. Any broader migration references should be treated as historical context unless explicitly reclassified.
+To store learnings and observations for the Assessment Agent during the Angular 18 → 19 migration. This memory helps the agent recognize recurring or unusual project structures and improve the accuracy of its assessment over time.
 
 ## Memory Structure
 
@@ -37,6 +34,6 @@ keywords: [webpack, custom-builder]
 The project uses a custom Webpack builder configured in `angular.json`, which is not the standard Angular CLI builder.
 
 **Implication for Assessment:**
-The standard `ng update` process may not correctly update all build-related configurations. The assessment must include a specific check for custom builders and flag this as a high-risk item for the planning agent.
+The standard `ng update` process may not correctly update all build-related configurations. The assessment must include a specific check for custom builders and flag this as a high-risk item for the planning agent during the 18 → 19 jump.
 ```
 ---

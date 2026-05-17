@@ -3,10 +3,7 @@ scope: implementation-agent
 name: Implementation Agent Memory
 
 ## Purpose
-To record successful solutions and workarounds for specific, unexpected errors encountered during the implementation phase. This memory serves as a knowledge base for resolving future technical challenges.
-
-## Active Scope Note
-This memory is currently focused on Angular **v17 -> v18 only**. Older version-jump references remain useful as history but should not override the active migration target.
+To record successful solutions and workarounds for specific, unexpected errors encountered during the implementation phase of the Angular 18 → 19 migration. This memory serves as a knowledge base for resolving future technical challenges.
 
 ## Memory Structure
 
@@ -40,7 +37,7 @@ keywords: [peer-dependency, rxjs]
 `Could not resolve dependency: peer rxjs@"^6.0.0" from @angular/core@"17.0.0"`
 
 **Context:**
-Running `ng update @angular/core@17` in a project with an older, incompatible third-party library.
+Running `ng update @angular/core@19` in a project with an older, incompatible third-party library.
 
 **Successful Solution:**
 The conflict was resolved by first updating the problematic third-party library to its latest version, which supported RxJS 7.

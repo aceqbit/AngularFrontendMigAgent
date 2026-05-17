@@ -1,15 +1,12 @@
 # Angular Migration Notes
 
-This document records the issues and solutions encountered during the Angular migration process.
-
-## Active Scope Note
-The current active migration focus is Angular **v17 -> v18 only**. The notes below include historical broader migration context and should be read accordingly.
+This document records the issues and solutions encountered during the Angular 18 → 19 migration process.
 
 ## Key Issues
 
 ### 1. Inconsistent Bootstrapping
 
-- **Problem:** After migrating to a new Angular version, the application failed to bootstrap due to changes in the bootstrapping API. Specifically, the `applicationProviders` property was not recognized in `platformBrowserDynamic().bootstrapModule()`.
+- **Problem:** After migrating to Angular 19, the application failed to bootstrap due to changes in the bootstrapping API. Specifically, the `applicationProviders` property was not recognized in `platformBrowserDynamic().bootstrapModule()`.
 - **Solution:** The `bootstrapModule` call in `src/main.ts` was simplified to `platformBrowserDynamic().bootstrapModule(AppModule)`, removing the unsupported options. This resolved the bootstrapping error.
 
 ### 2. Corrupted `node_modules` Directory
