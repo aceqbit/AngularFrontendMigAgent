@@ -1,11 +1,11 @@
 ---
 name: Angular Migration Planning
 description: >
-  Constructs a detailed, phased migration plan based on the findings from the assessment report.
-  This skill breaks down the migration into sequential, manageable tasks and defines the strategy for each version jump.
+  Constructs a detailed, phased plan for the v17 -> v18 migration based on assessment findings.
+  Breaks down the upgrade into sequential, manageable tasks with clear validation criteria.
 
-notes:
-  - Active scope is v17 -> v18 only; treat broader migration notes as reference material.
+scope:
+  - Angular v17 -> v18 only
 
 dependencies:
   - `assessment.skill.md`
@@ -17,9 +17,8 @@ tasks:
   - task: Decompose assessment findings into a phased roadmap.
     instructions:
       - Parse `report/assessment_report.md` to extract all identified issues.
-      - Group issues
-       into logical phases (e.g., Core Updates, Dependency Fixes, Refactoring).
-      - Create a strict, sequential plan for the active version jump (v17->v18). Historical per-version templates are retained for reference.
+      - Group issues into logical phases (e.g., Core Updates, Dependency Fixes, Refactoring).
+      - Create a strict, sequential plan for the v17 -> v18 migration only.
 
   - task: Define tasks, risks, and validation criteria for each phase.
     instructions:
@@ -32,48 +31,15 @@ tasks:
       - For each high-risk phase, define a clear rollback plan to revert changes if the migration step fails.
       - Specify the trigger conditions for a rollback.
 
-  - task: Plan zone & change detection fixes (Angular 21).
-    instructions:
-      - Extract all findings from the "Zone/Change Detection Risks" section of the assessment report.
-      - For each flagged component, create a task that:
-        1. Identifies the problematic async pattern (setInterval, setTimeout, event handler, etc.).
-        2. Specifies which fix strategy to use (markForCheck, NgZone.run, or RxJS refactor).
-        3. Includes unit test creation to verify template updates after data mutations.
-        4. Lists the exact file paths and line numbers to be modified.
-      - Mark all zone/change detection fixes as **P0 (Must Have)** priority and assign them to Phase 4b.
-      - These tasks must be completed before Phase 5 cleanup and validation, as they are breaking changes for Angular 21.
-
   - task: Generate the Migration Plan.
     instructions:
-      - Compile all phases, tasks, and metadata into a comprehensive `migration_plan.md`.
+      - Compile all phases, tasks, and metadata into a comprehensive `migration_v17_to_v18.md`.
+      - The plan file must be INDEPENDENT and include:
+        - Target version range (Angular 17 -> 18)
+        - Phase breakdown specific to v17 -> v18
+        - Validation gates (build, test, lint)
+        - Rollback trigger conditions and procedures
+        - Git checkpoint name (e.g., "v18-stable")
       - The plan must be ordered and easy to follow.
-    output: `plan/migration_plan.md`
-
-    - task: Generate per-version migration plans.
-      instructions:
-        - Generate FIVE separate, atomic migration plan files, one for each version jump:
-          1. `plan/migration_v16_to_v17.md` — Historical v16→v17 plan (kept for reference); active plan target is `plan/migration_v17_to_v18.md`.
-          2. `plan/migration_v17_to_v18.md` — All tasks, phases, validation gates, rollback triggers for v17→v18 only
-          3. `plan/migration_v18_to_v19.md` — All tasks, phases, validation gates, rollback triggers for v18→v19 only
-          4. `plan/migration_v19_to_v20.md` — All tasks, phases, validation gates, rollback triggers for v19→v20 only
-          5. `plan/migration_v20_to_v21.md` — All tasks, phases, validation gates, rollback triggers for v20→v21 only
-        - Each plan file must be INDEPENDENT and include:
-          - Target version range (e.g., "Angular 16 → 17")
-          - Phase breakdown specific to that version
-          - Validation gates (build, test, lint) for that version
-          - Rollback trigger conditions and procedures for that version
-          - Git checkpoint name (e.g., "v17-stable")
-          - Success criteria for that version
-          - Specific file changes required ONLY for that version
-          - Next version statement: "Upon success, proceed to plan/migration_v17_to_v18.md"
-        - Create `plan/migration_plan.md` as a master INDEX listing all 5 version-specific plans with brief descriptions and links.
-        - **CRITICAL**: Do NOT cross-reference or create dependencies between version plans in the files themselves. Each must be complete and standalone.
-        - Rationale: User experienced catastrophic midway failures with monolithic plans. Atomic per-version plans enable granular rollback and prevent cross-version corruption.
-      outputs:
-        - Comprehensive history of the v17→v18 technical journey (historical v16→v21 record retained for reference).
-        - `plan/migration_v17_to_v18.md`
-        - `plan/migration_v18_to_v19.md`
-        - `plan/migration_v19_to_v20.md`
-        - `plan/migration_v20_to_v21.md`
-        - `plan/migration_plan.md` (master index)
+    output: `plan/migration_v17_to_v18.md`
 ---
