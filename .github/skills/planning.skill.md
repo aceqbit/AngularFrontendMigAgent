@@ -1,8 +1,8 @@
 ---
 name: Angular Migration Planning
 description: >
-  Constructs a detailed, phased migration plan for the Angular 19→20 migration based on the findings from the assessment report.
-  This skill breaks the migration into sequential, manageable tasks and defines the strategy for that single version jump.
+  Constructs a detailed, phased migration plan based on the findings from the assessment report.
+  This skill breaks down the migration into sequential, manageable tasks and defines the strategy for each version jump.
 
 dependencies:
   - `assessment.skill.md`
@@ -16,7 +16,7 @@ tasks:
       - Parse `report/assessment_report.md` to extract all identified issues.
       - Group issues
        into logical phases (e.g., Core Updates, Dependency Fixes, Refactoring).
-      - Create a strict, sequential plan for the v19→v20 jump.
+      - Create a strict, sequential plan for the Angular 20 → 21 jump only.
 
   - task: Define tasks, risks, and validation criteria for each phase.
     instructions:
@@ -29,7 +29,7 @@ tasks:
       - For each high-risk phase, define a clear rollback plan to revert changes if the migration step fails.
       - Specify the trigger conditions for a rollback.
 
-  - task: Plan zone & change detection fixes for the target migration.
+  - task: Plan zone & change detection fixes (Angular 21).
     instructions:
       - Extract all findings from the "Zone/Change Detection Risks" section of the assessment report.
       - For each flagged component, create a task that:
@@ -38,7 +38,7 @@ tasks:
         3. Includes unit test creation to verify template updates after data mutations.
         4. Lists the exact file paths and line numbers to be modified.
       - Mark all zone/change detection fixes as **P0 (Must Have)** priority and assign them to Phase 4b.
-      - These tasks must be completed before Phase 5 cleanup and validation, as they are breaking changes for the target migration.
+      - These tasks must be completed before Phase 5 cleanup and validation, as they are breaking changes for Angular 21.
 
   - task: Generate the Migration Plan.
     instructions:
@@ -46,23 +46,23 @@ tasks:
       - The plan must be ordered and easy to follow.
     output: `plan/migration_plan.md`
 
-    - task: Generate the active migration plan.
+    - task: Generate per-version migration plans.
       instructions:
-        - Generate a single atomic migration plan file:
-          1. `plan/migration_v19_to_v20.md` — All tasks, phases, validation gates, rollback triggers for v19→v20 only
-        - The plan file must be INDEPENDENT and include:
-          - Target version range ("Angular 19 → 20")
+        - Generate FIVE separate, atomic migration plan files, one for each version jump:
+          1. `plan/migration_v20_to_v21.md` — All tasks, phases, validation gates, rollback triggers for v20→v21 only
+        - Each plan file must be INDEPENDENT and include:
+          - Target version range (e.g., "Angular 20 → 21")
           - Phase breakdown specific to that version
           - Validation gates (build, test, lint) for that version
           - Rollback trigger conditions and procedures for that version
-          - Git checkpoint name (e.g., "v20-stable")
+          - Git checkpoint name (e.g., "v21-stable")
           - Success criteria for that version
           - Specific file changes required ONLY for that version
-          - Next step statement: "After success, finalize the v19→v20 migration and stop"
-        - Create `plan/migration_plan.md` as the master INDEX listing the active migration plan with a brief description and link.
-        - **CRITICAL**: Do NOT cross-reference or create dependencies between version plans in the files themselves. The single plan must be complete and standalone.
-        - Rationale: User experienced catastrophic midway failures with monolithic plans. A single atomic plan enables granular rollback and prevents cross-version corruption.
+          - Next version statement: "Migration complete"
+        - Create `plan/migration_plan.md` as the master INDEX listing the final plan with brief descriptions and links.
+        - **CRITICAL**: Do NOT cross-reference or create dependencies beyond the final jump.
+        - Rationale: User experienced catastrophic midway failures with monolithic plans. Focusing on the final jump keeps the workflow narrow and predictable.
       outputs:
-        - `plan/migration_v19_to_v20.md`
+        - `plan/migration_v20_to_v21.md`
         - `plan/migration_plan.md` (master index)
 ---

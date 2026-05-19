@@ -1,10 +1,10 @@
-# Angular v19 → v20 Migration Assessment Report
+# Angular v20 → v21 Migration Assessment Report
 
 **Assessment Date:** May 17, 2026  
-**Current Angular Version:** 19.x.x  
-**Target Angular Version:** 20.x.x  
-**TypeScript Version:** (follow Angular 20 guidance)  
-**Assessment Scope:** v19 → v20 ONLY (Focused Migration)
+**Current Angular Version:** 20.x.x  
+**Target Angular Version:** 21.x.x  
+**TypeScript Version:** 5.9.x (follow Angular 21 guidance)  
+**Assessment Scope:** v20 → v21 ONLY (Focused Migration)
 
 ---
 
@@ -20,26 +20,26 @@
 
 ## 1. Package Version Analysis & Required Updates
 
-### Current Package Guidance (v19 → v20)
-- Update all `@angular/*` packages to v20 per Angular update guidance.
-- Update `@angular/cli` and `@angular-devkit/build-angular` to v20-compatible releases.
-- Update TypeScript to the version recommended by Angular 20.
+### Current Package Guidance (v20 → v21)
+- Update all `@angular/*` packages to v21 per Angular update guidance.
+- Update `@angular/cli` and `@angular-devkit/build-angular` to v21-compatible releases.
+- Update TypeScript to the version recommended by Angular 21.
 
 ### Update Commands (example)
 ```bash
-ng update @angular/core@20 @angular/cli@20 --allow-dirty --force
+ng update @angular/core@21 @angular/cli@21 --allow-dirty --force
 npm install
 ```
 
 ---
 
-## 2. Critical Breaking Changes: v19 → v20
+## 2. Critical Breaking Changes: v20 → v21
 
 ### 🔴 **CRITICAL: Change Detection Behavior Changes**
 
 **Impact Level:** CRITICAL — Component UI updates will fail silently.
 
-Angular 20 enforces stricter change detection boundaries for data mutations **outside Angular's zone** (e.g., `setInterval()`, `setTimeout()` callbacks, browser event handlers).
+Angular 21 enforces stricter change detection boundaries for data mutations **outside Angular's zone** (e.g., `setInterval()`, `setTimeout()` callbacks, browser event handlers).
 
 **Components Affected:**
 1. **[dashboard-widgets.component.ts](../src/app/components/dashboard-widgets/dashboard-widgets.component.ts#L46)**
@@ -56,7 +56,7 @@ Angular 20 enforces stricter change detection boundaries for data mutations **ou
      }
      ```
    - **Issue:** No change detection trigger after mutation
-   - **Risk:** Metrics display will be **frozen/stale** in Angular 18
+  - **Risk:** Metrics display will be **frozen/stale** in Angular 21
    - **Fix Required:** Add `ChangeDetectorRef.markForCheck()` after mutations
 
 2. **[resource-monitor.component.ts](../src/app/components/resource-monitor/resource-monitor.component.ts#L49)**
@@ -73,10 +73,10 @@ Angular 20 enforces stricter change detection boundaries for data mutations **ou
      }
      ```
    - **Issue:** No change detection trigger after mutations
-   - **Risk:** Node status indicators will **not update** in Angular 18
+  - **Risk:** Node status indicators will **not update** in Angular 21
    - **Fix Required:** Add `ChangeDetectorRef.markForCheck()` after mutations
 
-**Root Cause:** Angular 19's change detection strategy does not automatically detect mutations from native browser APIs (`setInterval`, `setTimeout`, direct DOM events). These callbacks run **outside Angular's zone** and require explicit change detection triggers.
+**Root Cause:** Angular 21's change detection strategy does not automatically detect mutations from native browser APIs (`setInterval`, `setTimeout`, direct DOM events). These callbacks run **outside Angular's zone** and require explicit change detection triggers.
 
 **Solution Pattern:**
 ```typescript
@@ -90,7 +90,7 @@ export class YourComponent implements OnInit, OnDestroy {
       // Update data
       this.data.value = newValue;
       
-      // REQUIRED in Angular 18:
+      // REQUIRED in Angular 21:
       this.cdr.markForCheck();
     }, 1000);
   }
@@ -116,13 +116,13 @@ export class YourComponent implements OnInit, OnDestroy {
 - `main.ts` imports `provideZoneChangeDetection` but doesn't use it (suggests partial conversion)
 - `app.module.ts` still uses traditional NgModule pattern with empty `declarations` array
 -- `app.component.ts` is standalone
--- **This mixed pattern is unstable in v20**
++- **This mixed pattern is unstable in v21**
 
 **Fix Required:** Choose ONE approach:
-1. **Option A (Recommended for v20):** Migrate to **standalone bootstrap**
+1. **Option A (Recommended for v21):** Migrate to **standalone bootstrap**
   - Remove `app.module.ts`
   - Use `bootstrapApplication()` in `main.ts`
-  - Enables full v19/20 optimizations
+  - Enables full v21 optimizations
 
 2. **Option B:** Keep NgModule bootstrap but fix app.module.ts
    - Move components to `declarations` array (not `imports`)
@@ -146,20 +146,20 @@ export class YourComponent implements OnInit, OnDestroy {
 
 ---
 
-### 🟡 **Deprecated APIs Removed in v20**
+### 🟡 **Deprecated APIs Removed in v21**
 
-| Deprecated (v19) | Removed (v20) | Affected Code | Severity |
+| Deprecated (v20) | Removed (v21) | Affected Code | Severity |
 |------------------|---------------|--------------|----------|
 | `platformBrowserDynamic().bootstrapModule()` | **Removed** (use `bootstrapApplication()` instead) | [main.ts](../src/main.ts) | HIGH |
 | Old change detection patterns | **Removed** (requires explicit triggers) | [dashboard-widgets.component.ts](../src/app/components/dashboard-widgets/dashboard-widgets.component.ts), [resource-monitor.component.ts](../src/app/components/resource-monitor/resource-monitor.component.ts) | **CRITICAL** |
 | CommonModule in standalone imports (redundant) | Deprecated warning (not removed) | Multiple standalone components | LOW |
-| `@angular/router` lazy loading syntax | Updated in v19 | [app-routing.module.ts](../src/app/app-routing.module.ts) | MEDIUM |
+| `@angular/router` lazy loading syntax | Updated in v20 | [app-routing.module.ts](../src/app/app-routing.module.ts) | MEDIUM |
 
 ---
 
 ## 3. TypeScript & Build Configuration
 
-- Verify `tsconfig.json` and update `moduleResolution` or other compiler options as recommended by Angular 19.
+- Verify `tsconfig.json` and update `moduleResolution` or other compiler options as recommended by Angular 21.
 - Ensure `angular.json` uses builders compatible with the updated `@angular-devkit/build-angular`.
 
 ---
@@ -167,8 +167,8 @@ export class YourComponent implements OnInit, OnDestroy {
 ## 4. Build Configuration Analysis
 
 ### Current angular.json
-- **Builder:** `@angular-devkit/build-angular:browser` ✅ Compatible with v20
-- **Polyfills:** `zone.js` only ✅ Correct for v20
+- **Builder:** `@angular-devkit/build-angular:browser` ✅ Compatible with v21
+- **Polyfills:** `zone.js` only ✅ Correct for v21
 - **TypeScript Config:** Uses `tsconfig.app.json` ✅ Correct
 - **Output Path:** `dist/frontend` ✅ Fine
 - **CSS Styles:** `src/styles.css` ✅ Compatible
@@ -559,7 +559,7 @@ describe('DashboardWidgetsComponent - Change Detection', () => {
 - ✅ CSS custom properties not required for v19
 - ✅ Animation patterns compatible
 
-**Assessment:** No CSS changes required for v19→v20 migration.
+**Assessment:** No CSS changes required for v20→v21 migration.
 
 **Windows-Specific Note:** On Windows systems, `node_modules` may become corrupted during large dependency updates. Mitigation:
 ```bash
@@ -580,8 +580,8 @@ npm install
 - [ ] On Windows: Prepare for potential `node_modules` deletion issues
 
 ### Phase 1: Package Updates
--- [ ] Update all `@angular/*` packages to v20
-- [ ] Update TypeScript per Angular 19 recommendation
+-- [ ] Update all `@angular/*` packages to v21
+- [ ] Update TypeScript per Angular 21 recommendation
 - [ ] Run `npm install` and verify peer dependencies
 
 ### Phase 2: Configuration Updates
@@ -604,9 +604,9 @@ npm install
 - [ ] Run manual UI checks across key pages
 
 ### Post-Migration Checklist
--- [ ] Commit changes: `git commit -m "chore: complete Angular v20 migration"`
+-- [ ] Commit changes: `git commit -m "chore: complete Angular v21 migration"`
 - [ ] Push to repository: `git push origin main`
--- [ ] Tag release: `git tag -a v20-stable`
+- [ ] Tag release: `git tag -a v21-stable`
 - [ ] Update documentation
 
 ---
@@ -748,7 +748,7 @@ this.cdr.markForCheck();
 
 ---
 
-## 16. Success Criteria for v19 Migration
+## 16. Success Criteria for v20 → v21 Migration
 
 ✅ **Build Criteria:**
 - `ng build` completes with 0 errors
@@ -789,14 +789,14 @@ this.cdr.markForCheck();
 | src/app/app.component.ts | Root component | ✅ Already standalone |
 | src/app/components/dashboard-widgets/ | Polling component | 🔴 CRITICAL FIX |
 | src/app/components/resource-monitor/ | Polling component | 🔴 CRITICAL FIX |
-| src/app/shared-data.service.ts | Global service | ✅ Safe for v19 |
+| src/app/shared-data.service.ts | Global service | ✅ Safe for v20 |
 | src/styles.css | Global styles | ✅ No changes needed |
 
 ---
 
 ## Conclusion
 
-The Angular v19 → v20 migration is **achievable in ~90 minutes** with careful execution. The **primary risk** is the change detection issue in polling-based components (dashboard-widgets and resource-monitor), which will cause **frozen UI updates** if not addressed. Both issues have been clearly identified and should be addressed as part of the migration.
+The Angular v20 → v21 migration is **achievable in ~90 minutes** with careful execution. The **primary risk** is the change detection issue in polling-based components (dashboard-widgets and resource-monitor), which will cause **frozen UI updates** if not addressed. Both issues have been clearly identified and should be addressed as part of the migration.
 
 **Recommended Next Steps:**
 1. Review this assessment with the team
@@ -810,5 +810,5 @@ The Angular v19 → v20 migration is **achievable in ~90 minutes** with careful 
 ---
 
 **Report Generated:** May 17, 2026  
-**Assessment Agent:** Angular v19 → v20 Specialist  
+**Assessment Agent:** Angular v20 → v21 Specialist  
 **Next Action:** Begin Package Updates (Phase 1)

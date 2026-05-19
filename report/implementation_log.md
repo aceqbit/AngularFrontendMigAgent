@@ -1,12 +1,12 @@
-# Angular v19 → v20 Migration Implementation Log
+# Angular v20 → v21 Migration Implementation Log
 
 **Migration Date:** 2026-05-17  
 **Status:** PLANNED  
-**Target Version:** Angular v20.x  
+**Target Version:** Angular v21.x  
 
 ## Executive Summary
 
-This log will track the implementation steps for the focused migration from Angular 19 to Angular 20. Use it to record commands run, package versions installed, build outputs, test results, and any issues encountered during the migration.
+This log will track the implementation steps for the focused migration from Angular 20 to Angular 21. Use it to record commands run, package versions installed, build outputs, test results, and any issues encountered during the migration.
 
 ## Phase 1: Dependency Updates (Template)
 
@@ -14,7 +14,7 @@ This log will track the implementation steps for the focused migration from Angu
 
 Command to execute when ready:
 ```bash
-ng update @angular/core@20 @angular/cli@20 --allow-dirty --force
+ng update @angular/core@21 @angular/cli@21 --allow-dirty --force
 ```
 
 ### Dependency Validation (to fill during run)
@@ -56,7 +56,7 @@ Record test results and counts here after running.
 
 If a gate fails, rollback to the pre-migration checkpoint:
 ```bash
-git reset --hard v19-stable
+git reset --hard v20-stable
 npx rimraf node_modules package-lock.json
 npm install
 ```

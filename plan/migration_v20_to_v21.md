@@ -11,7 +11,7 @@
 ### Phase 0 — Prepare
 - Create a git checkpoint: `git commit -m "chore: pre-migration checkpoint (v20)"` and tag `v20-stable`.
 - Ensure working tree is clean.
-- Stop dev servers and close editors that may lock files (Windows-specific precaution).
+- Stop dev servers and close editors that may lock files on Windows.
 
 ### Phase 1 — Dependency Updates
 - Run:
@@ -22,7 +22,7 @@ npm install
 - Update TypeScript to the version required by Angular 21.
 
 ### Phase 2 — Configuration
-- Update `tsconfig.json` settings if needed according to Angular 21 guidance.
+- Update `tsconfig.json` settings for Angular 21 guidance.
 - Ensure `angular.json` builders are compatible with updated `@angular-devkit/build-angular`.
 
 ### Phase 3 — Code Fixes
@@ -32,7 +32,7 @@ npm install
 
 ### Phase 4 — Validation Gates
 - Run `ng build` (dev), `ng build --configuration production`.
-- Run targeted unit tests for changed components first (dashboard, resource monitor), then run full test suite.
+- Run targeted unit tests for changed components first, then run full test suite.
 - Run smoke tests in browser; verify live updates for polling components.
 - Validate key runtime scenarios and check browser console for critical errors.
 

@@ -1,20 +1,20 @@
-# Migration Plan: Angular 19 → 20
+# Migration Plan: Angular 20 → 21
 
-This repository has been scoped to a focused, atomic migration from Angular 19 to Angular 20.
+This repository has been scoped to a focused, atomic migration from Angular 20 to Angular 21.
 
 Purpose: provide a single-version migration plan that is independent, verifiable, and checkpointed.
 
 ## Overview
 
-- **Source version:** Angular 19.x
-- **Target version:** Angular 20.x
+- **Source version:** Angular 20.x
+- **Target version:** Angular 21.x
 - **Primary goals:** upgrade `@angular/*` packages, update TypeScript/builder settings as required, fix change-detection issues, run validation gates, and create a git checkpoint on success.
 
 ## Plan Structure
 
-1. Generate a single atomic plan file: `plan/migration_v19_to_v20.md` (this file).
+1. Generate a single atomic plan file: `plan/migration_v20_to_v21.md` (this file).
 2. Execute the plan fully: dependency updates, config adjustments, code fixes, validation gates.
-3. On success: commit and tag `v20-stable`, push to `origin main`.
+3. On success: commit and tag `v21-stable`, push to `origin main`.
 4. If validation fails: stop, record failure, and revert to pre-migration checkpoint.
 
 ## Validation Gates
@@ -26,12 +26,12 @@ Purpose: provide a single-version migration plan that is independent, verifiable
 
 ## Where to find the detailed steps
 
-The detailed, atomic migration steps are in [plan/migration_v19_to_v20.md](migration_v19_to_v20.md).
+The detailed, atomic migration steps are in [plan/migration_v20_to_v21.md](migration_v20_to_v21.md).
 
 ## Post-Migration
 
-- Commit message: `chore: complete Angular v20 migration`
-- Tag: `v20-stable`
+- Commit message: `chore: complete Angular v21 migration`
+- Tag: `v21-stable`
 - Push: `git push origin main --follow-tags`
 
 This master plan is intentionally minimal — the actionable checklist and file-by-file tasks live in the per-version plan above.

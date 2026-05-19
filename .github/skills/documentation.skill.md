@@ -1,8 +1,8 @@
 ---
 name: Angular Migration Documentation
 description: >
-  Documents the Angular 19→20 migration process, creating a comprehensive record of all changes, decisions, and outcomes.
-  This skill ensures that the project's documentation is updated to reflect the migrated state for that step.
+  Documents the Angular 20 → 21 migration process, creating a comprehensive record of all changes, decisions, and outcomes.
+  This skill ensures that the project's documentation is updated to reflect the final migrated state.
 
 dependencies:
   - `implementation.skill.md`

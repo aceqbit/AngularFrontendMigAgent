@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -26,7 +26,7 @@ export class AutoCompleteComplexComponent implements OnInit {
   
   allData: SearchResult[] = [];
 
-  constructor() { }
+  constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.generateHeavyData();
@@ -63,6 +63,8 @@ export class AutoCompleteComplexComponent implements OnInit {
 
       this.groupResults();
       this.isLoading = false;
+      // Ensure change detection after async timeout-based mutation
+      this.cdr.markForCheck();
     }, 300);
   }
 
