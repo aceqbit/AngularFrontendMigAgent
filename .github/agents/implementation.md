@@ -55,7 +55,7 @@ Executing the migration plan by applying code and configuration changes for the 
 - **Post-Commit Recovery Check:** After every version jump is committed and pushed, the agent must verify the branch state and continue from that checkpoint instead of silently skipping ahead.
 
 ### Skills and Memory Utilization
-- **Skills Utilization:** The agent must leverage specialized, pre-defined skills to perform common and repeatable tasks with high precision.
+- **Skills Utilization:** The agent must leverage specialized, pre-defined skills to perform common and repeatable tasks with high pr+ecision.
   - **Example:** A `dependency-update` skill will handle `package.json` modifications, automatically using flags like `--force` or `--legacy-peer-deps`. A `clean-workspace` skill will execute the `rimraf` and `npm cache` commands. A `refactor-standalone` skill will fix `NG6008` errors.
 - **Skill Discovery:** Agents are not hardcoded with a list of skills. They are instructed to consult the `skills/` directory to discover and utilize available skills. When a new `.skill.md` file is added, all agents can dynamically discover and use it without needing to be reconfigured.
 - **Memory Agent Integration & Update Cycle:**
